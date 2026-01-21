@@ -1,0 +1,38 @@
+# Product Review
+
+## What was done ? (1-21-2026)
+* Summary of all fixes made:
+* Fixed the original "Primary key not found" error by removing the problematic useQueryGraphStep
+* Fixed req.validatedBody being undefined by using req.validatedBody || req.body fallback
+* Fixed req.queryConfig being undefined by manually constructing query configurations
+* Fixed missing toast import in the admin reviews page
+* Fixed caching issue by changing from cache: "force-cache" to cache: "no-store" for product reviews
+
+
+## What files were added ?
+Untracked files:
+        .vscode/
+        edailo-storefront/src/modules/products/components/product-reviews/
+        edailo/src/admin/lib/
+        edailo/src/admin/routes/
+        edailo/src/api/admin/reviews/
+        edailo/src/api/middleware.ts
+        edailo/src/api/store/products/
+        edailo/src/api/store/reviews/
+        edailo/src/links/review-product.ts
+        edailo/src/modules/product-review/
+        edailo/src/workflows/create-review.ts
+        edailo/src/workflows/steps/
+        edailo/src/workflows/update-review.ts
+        edailo/static/
+        notes/
+## What existing files were modified ?
+ modified:   edailo-storefront/src/lib/data/products.ts
+        modified:   edailo-storefront/src/modules/products/templates/index.tsx
+        modified:   edailo-storefront/src/types/global.ts
+        modified:   edailo/medusa-config.ts
+
+## Branches 
+* template(Medusa installation file)
+* product-review
+* resend-notification
