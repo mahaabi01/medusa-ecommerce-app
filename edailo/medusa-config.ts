@@ -1,6 +1,6 @@
-import { loadEnv, defineConfig } from "@medusajs/framework/utils";
+import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 
-loadEnv(process.env.NODE_ENV || "development", process.cwd());
+loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 module.exports = defineConfig({
   projectConfig: {
@@ -11,12 +11,7 @@ module.exports = defineConfig({
       authCors: process.env.AUTH_CORS!,
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
-      ...( { trustProxy: true } as any ),
-    },
-    cookieOptions:
-      process.env.NODE_ENV === "production"
-        ? { sameSite: "none", secure: true }
-        : { sameSite: "lax", secure: false },
+    }
   },
   plugins: [
     {
@@ -24,4 +19,4 @@ module.exports = defineConfig({
       options: {},
     },
   ],
-});
+})
