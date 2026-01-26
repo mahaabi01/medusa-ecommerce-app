@@ -25,7 +25,7 @@
   "include": [
     "**/*",
     ".medusa/types/*"
-  ],
+, "../edailo-storefront/src/app/components"  ],
   "exclude": [
     "node_modules",
     ".medusa/server",

@@ -1,7 +1,7 @@
 "use client"
 
 import { RadioGroup } from "@headlessui/react"
-import { isStripeLike, paymentInfoMap } from "@lib/constants"
+import { isStripeLike, paymentInfoMap, isEsewa } from "@lib/constants"
 import { initiatePaymentSession } from "@lib/data/cart"
 import { CheckCircleSolid, CreditCard } from "@medusajs/icons"
 import { Button, Container, Heading, Text, clx } from "@medusajs/ui"
@@ -45,6 +45,10 @@ const Payment = ({
       await initiatePaymentSession(cart, {
         provider_id: method,
       })
+    } else if (isEsewa(method)) {
+      await initiatePaymentSession(cart, {
+        provider_id: method,
+      })
     }
   }
 
@@ -85,7 +89,17 @@ const Payment = ({
         })
       }
 
-      if (!shouldInputCard) {
+      if (!shouldInputCard && !isEsewa(selectedPaymentMethod)) {
+        return router.push(
+          pathname + "?" + createQueryString("step", "review"),
+          {
+            scroll: false,
+          }
+        )
+      }
+      
+      // For eSewa, go to review step
+      if (isEsewa(selectedPaymentMethod)) {
         return router.push(
           pathname + "?" + createQueryString("step", "review"),
           {

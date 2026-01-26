@@ -4,6 +4,7 @@ import { CreditCard } from "@medusajs/icons"
 import Ideal from "@modules/common/icons/ideal"
 import Bancontact from "@modules/common/icons/bancontact"
 import PayPal from "@modules/common/icons/paypal"
+import Esewa from "@modules/common/icons/esewa"
 
 /* Map of payment provider_id to their title and icon. Add in any payment providers you want to use. */
 export const paymentInfoMap: Record<
@@ -34,6 +35,10 @@ export const paymentInfoMap: Record<
     title: "Manual Payment",
     icon: <CreditCard />,
   },
+  pp_esewa_esewa: {
+    title: "eSewa",
+    icon: <Esewa />,
+  },
   // Add more payment providers here
 }
 
@@ -49,6 +54,10 @@ export const isPaypal = (providerId?: string) => {
 }
 export const isManual = (providerId?: string) => {
   return providerId?.startsWith("pp_system_default")
+}
+
+export const isEsewa = (providerId?: string) => {
+  return providerId?.startsWith("pp_esewa")
 }
 
 // Add currencies that don't need to be divided by 100

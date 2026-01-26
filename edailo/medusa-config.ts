@@ -1,6 +1,6 @@
-import { loadEnv, defineConfig } from '@medusajs/framework/utils'
+import { loadEnv, defineConfig } from "@medusajs/framework/utils";
 
-loadEnv(process.env.NODE_ENV || 'development', process.cwd())
+loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
 module.exports = defineConfig({
   projectConfig: {
@@ -11,6 +11,24 @@ module.exports = defineConfig({
       authCors: process.env.AUTH_CORS!,
       jwtSecret: process.env.JWT_SECRET || "supersecret",
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
-    }
-  }
-})
+    },
+  },
+  modules: [
+    {
+      resolve: "@medusajs/medusa/payment",
+      options: {
+        providers: [
+          {
+            resolve: "./src/modules/esewa-payment",
+            id: "esewa",
+            options: {
+              merchantId: process.env.ESEWA_MERCHANT_ID,
+              secretKey: process.env.ESEWA_SECRET_KEY,
+              environment: process.env.ESEWA_ENVIRONMENT || "test",
+            },
+          },
+        ],
+      },
+    },
+  ],
+});

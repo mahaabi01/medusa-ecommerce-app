@@ -1,6 +1,6 @@
 "use client"
 
-import { isManual, isStripeLike } from "@lib/constants"
+import { isManual, isStripeLike, isEsewa } from "@lib/constants"
 import { placeOrder } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
@@ -38,6 +38,14 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     case isManual(paymentSession?.provider_id):
       return (
         <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
+      )
+    case isEsewa(paymentSession?.provider_id):
+      return (
+        <EsewaPaymentButton
+          notReady={notReady}
+          cart={cart}
+          data-testid={dataTestId}
+        />
       )
     default:
       return <Button disabled>Select a payment method</Button>
@@ -185,6 +193,85 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
       <ErrorMessage
         error={errorMessage}
         data-testid="manual-payment-error-message"
+      />
+    </>
+  )
+}
+
+const EsewaPaymentButton = ({
+  cart,
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  cart: HttpTypes.StoreCart
+  notReady: boolean
+  "data-testid"?: string
+}) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const session = cart.payment_collection?.payment_sessions?.find(
+    (s) => s.status === "pending" && s.provider_id === "pp_esewa_esewa"
+  )
+
+  const handlePayment = () => {
+    if (!session?.data) {
+      setErrorMessage("Payment session not initialized")
+      return
+    }
+
+    setSubmitting(true)
+
+    // Store cart ID for verification after redirect
+    if (cart.id) {
+      localStorage.setItem("cart_id", cart.id)
+    }
+
+    // Create and submit form to eSewa
+    const form = document.createElement("form")
+    form.method = "POST"
+    form.action = session.data.payment_url as string
+
+    const fields = {
+      amount: session.data.amount,
+      tax_amount: session.data.tax_amount,
+      total_amount: session.data.total_amount,
+      transaction_uuid: session.data.transaction_uuid,
+      product_code: session.data.product_code,
+      product_service_charge: session.data.product_service_charge,
+      product_delivery_charge: session.data.product_delivery_charge,
+      success_url: session.data.success_url,
+      failure_url: session.data.failure_url,
+      signed_field_names: "total_amount,transaction_uuid,product_code",
+      signature: session.data.signature,
+    }
+
+    Object.entries(fields).forEach(([key, value]) => {
+      const input = document.createElement("input")
+      input.type = "hidden"
+      input.name = key
+      input.value = String(value)
+      form.appendChild(input)
+    })
+
+    document.body.appendChild(form)
+    form.submit()
+  }
+
+  return (
+    <>
+      <Button
+        disabled={notReady}
+        isLoading={submitting}
+        onClick={handlePayment}
+        size="large"
+        data-testid={dataTestId}
+      >
+        Pay with eSewa
+      </Button>
+      <ErrorMessage
+        error={errorMessage}
+        data-testid="esewa-payment-error-message"
       />
     </>
   )
