@@ -72,27 +72,61 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
     } = context
 
     try {
-      // Generate unique transaction UUID
-      const transactionUuid = `${resource_id}-${Date.now()}`
-      
-      // Calculate total amount in paisa (eSewa uses paisa, not rupees)
-      const totalAmount = (amount / 100).toFixed(2)
+      // Log the context to debug
+      console.log("=== eSewa initiatePayment ===")
+      console.log("Amount:", amount)
+      console.log("Currency:", currency_code)
+      console.log("Resource ID:", resource_id)
+      console.log("Email:", email)
+      console.log("Cart context:", cart_context)
 
-      // Create payment data
+      // resource_id should be the cart ID, but we'll keep a fallback for safety
+      // The payment button will use cart.id (the real ID) for localStorage
+      const cartId = resource_id || `cart-${Date.now()}`
+      console.log("Using cart ID for transaction UUID:", cartId)
+      
+      // Generate unique transaction UUID
+      const transactionUuid = `${cartId}-${Date.now()}`
+      
+      // IMPORTANT: Medusa amount is already in the correct unit for eSewa
+      // For NPR: Medusa stores in Rupees (not Paisa)
+      // eSewa expects Rupees as well
+      // So NO conversion needed - use amount directly
+      const amountInRupees = Math.round(amount)
+      
+      // eSewa requires: total_amount = amount + tax_amount + product_service_charge + product_delivery_charge
+      // Since we're not breaking down the amount, we put everything in 'amount' and set others to 0
+      const productAmount = amountInRupees.toString()
+      const taxAmount = "0"
+      const serviceCharge = "0"
+      const deliveryCharge = "0"
+      const totalAmount = amountInRupees.toString()
+
+      // Get country code - use 'dk' as default since that's your main region
+      const countryCode = 'dk'
+
+      // Create payment data - ALL fields are required by eSewa
       const paymentData = {
-        amount: totalAmount,
-        tax_amount: "0",
+        amount: productAmount,
+        tax_amount: taxAmount,
         total_amount: totalAmount,
         transaction_uuid: transactionUuid,
         product_code: this.options_.merchantId,
-        product_service_charge: "0",
-        product_delivery_charge: "0",
-        success_url: cart_context.success_url || `${process.env.STOREFRONT_URL}/order?transaction_uuid=${transactionUuid}&cart_id=${resource_id}`,
-        failure_url: cart_context.failure_url || `${process.env.STOREFRONT_URL}/checkout?error=payment_failed`,
+        product_service_charge: serviceCharge,
+        product_delivery_charge: deliveryCharge,
+        // eSewa will append ?data=base64_encoded_response to this URL
+        success_url: `${process.env.STOREFRONT_URL}/${countryCode}/order`,
+        failure_url: `${process.env.STOREFRONT_URL}/${countryCode}/payment-failed?error=payment_failed`,
       }
 
-      // Generate signature
+      // Generate signature using the exact format from eSewa docs
       const signature = this.generateSignature(paymentData)
+
+      console.log("eSewa payment data created:")
+      console.log("- Transaction UUID:", transactionUuid)
+      console.log("- Total Amount:", totalAmount)
+      console.log("- Product Code:", this.options_.merchantId)
+      console.log("- Signature:", signature)
 
       return {
         data: {
@@ -100,9 +134,11 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
           signature,
           status: "PENDING",
           payment_url: this.getPaymentUrl(),
+          cart_id: cartId, // Store cart_id for reference (but payment button will use cart.id)
         },
       }
     } catch (error) {
+      console.error("❌ eSewa initiate payment error:", error)
       return {
         error: error.message,
         code: "esewa_initiate_error",
@@ -121,7 +157,29 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
     }
   > {
     try {
+      console.log("=== eSewa authorizePayment called ===")
+      console.log("Payment session data:", paymentSessionData)
+      console.log("Context:", context)
+
       const { transaction_code, transaction_uuid } = context
+
+      if (!transaction_code || !transaction_uuid) {
+        console.error("❌ Missing transaction_code or transaction_uuid")
+        // Return error status with data
+        return {
+          status: PaymentSessionStatus.ERROR,
+          data: {
+            ...paymentSessionData,
+            status: "ERROR",
+            error: "Missing transaction details",
+          },
+        }
+      }
+
+      console.log("Verifying payment with eSewa API...")
+      console.log("- Transaction Code:", transaction_code)
+      console.log("- Transaction UUID:", transaction_uuid)
+      console.log("- Total Amount:", paymentSessionData.total_amount)
 
       // Verify payment with eSewa
       const verificationResult = await this.verifyPayment(
@@ -130,28 +188,52 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
         paymentSessionData.total_amount as string
       )
 
+      console.log("eSewa verification result:", verificationResult)
+
       if (verificationResult.verified) {
-        return {
+        console.log("✅ Payment verified successfully with eSewa")
+        
+        const authorizedData = {
           status: PaymentSessionStatus.AUTHORIZED,
           data: {
             ...paymentSessionData,
             status: "COMPLETE",
             transaction_code,
             verified_at: new Date().toISOString(),
+            esewa_verification_data: verificationResult.data,
           },
         }
+        
+        console.log("Returning authorization data:")
+        console.log("- Status:", authorizedData.status)
+        console.log("- Data status:", authorizedData.data.status)
+        
+        return authorizedData
       }
 
+      console.error("❌ Payment verification failed")
+      console.error("Verification result:", verificationResult)
+      
+      // Return error status with data
       return {
-        error: "Payment verification failed",
-        code: "esewa_verification_failed",
-        detail: verificationResult,
+        status: PaymentSessionStatus.ERROR,
+        data: {
+          ...paymentSessionData,
+          status: "ERROR",
+          error: "Payment verification failed with eSewa",
+          verification_result: verificationResult,
+        },
       }
     } catch (error) {
+      console.error("❌ eSewa authorize payment error:", error)
+      // Return error status with data
       return {
-        error: error.message,
-        code: "esewa_authorize_error",
-        detail: error,
+        status: PaymentSessionStatus.ERROR,
+        data: {
+          ...paymentSessionData,
+          status: "ERROR",
+          error: error.message || "Authorization failed",
+        },
       }
     }
   }
@@ -240,7 +322,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
     transactionCode: string,
     transactionUuid: string,
     totalAmount: string
-  ): Promise<{ verified: boolean; data?: any }> {
+  ): Promise<{ verified: boolean; data?: any; error?: string }> {
     try {
       const verificationUrl = this.options_.environment === "production"
         ? "https://epay.esewa.com.np/api/epay/transaction/status"
@@ -252,26 +334,56 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
         transaction_uuid: transactionUuid,
       }
 
-      const response = await fetch(
-        `${verificationUrl}?product_code=${verificationData.product_code}&total_amount=${verificationData.total_amount}&transaction_uuid=${verificationData.transaction_uuid}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const queryString = `product_code=${verificationData.product_code}&total_amount=${verificationData.total_amount}&transaction_uuid=${verificationData.transaction_uuid}`
+      const fullUrl = `${verificationUrl}?${queryString}`
+
+      console.log("=== Calling eSewa Verification API ===")
+      console.log("URL:", fullUrl)
+      console.log("Parameters:", verificationData)
+
+      const response = await fetch(fullUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      console.log("eSewa API Response Status:", response.status)
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("❌ eSewa API Error Response:", errorText)
+        return { 
+          verified: false, 
+          error: `eSewa API returned ${response.status}: ${errorText}` 
         }
-      )
+      }
 
       const result = await response.json()
+      console.log("eSewa API Response Data:", result)
 
+      // Check if payment is complete and UUID matches
       if (result.status === "COMPLETE" && result.transaction_uuid === transactionUuid) {
+        console.log("✅ eSewa verification successful")
         return { verified: true, data: result }
       }
 
-      return { verified: false, data: result }
+      console.error("❌ eSewa verification failed - status or UUID mismatch")
+      console.error("Expected UUID:", transactionUuid)
+      console.error("Received UUID:", result.transaction_uuid)
+      console.error("Status:", result.status)
+
+      return { 
+        verified: false, 
+        data: result,
+        error: `Status: ${result.status}, UUID match: ${result.transaction_uuid === transactionUuid}`
+      }
     } catch (error) {
-      this.logger_.error("eSewa verification error:", error)
-      return { verified: false }
+      console.error("❌ eSewa verification API error:", error)
+      return { 
+        verified: false, 
+        error: error.message || "Network error calling eSewa API" 
+      }
     }
   }
 }

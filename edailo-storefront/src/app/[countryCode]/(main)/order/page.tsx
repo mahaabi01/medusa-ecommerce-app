@@ -1,11 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useSearchParams, useRouter, useParams } from "next/navigation"
 
-export default function OrderConfirmedPage() {
+export default function OrderVerificationPage() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const params = useParams()
+  const countryCode = params.countryCode as string
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -31,14 +33,12 @@ export default function OrderConfirmedPage() {
           transaction_uuid,
           status,
           total_amount,
-          product_code,
           signature
         } = decodedData
 
         // Check if payment was successful
         if (status !== "COMPLETE") {
-          setError(`Payment ${status.toLowerCase()}. Please try again.`)
-          setLoading(false)
+          router.push(`/${countryCode}/payment-failed?error=payment_${status.toLowerCase()}`)
           return
         }
 
@@ -51,8 +51,15 @@ export default function OrderConfirmedPage() {
           return
         }
 
-        // Verify payment with backend
-        const response = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/api/esewa/verify`, {
+        console.log("Verifying payment with backend...")
+        console.log("- Cart ID:", cartId)
+        console.log("- Transaction UUID:", transaction_uuid)
+        console.log("- Transaction Code:", transaction_code)
+        console.log("- Status:", status)
+        console.log("- Total Amount:", total_amount)
+
+        // Verify payment with backend - send ALL data from eSewa
+        const response = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/esewa/verify`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -61,30 +68,45 @@ export default function OrderConfirmedPage() {
             transaction_code,
             transaction_uuid,
             cart_id: cartId,
+            total_amount,
+            status,
+            signature, // Important: Send signature for verification
           }),
         })
 
         if (!response.ok) {
-          throw new Error("Payment verification failed")
+          const errorData = await response.json()
+          console.error("Verification failed:", errorData)
+          throw new Error(errorData.error || "Payment verification failed")
         }
 
         const result = await response.json()
+        console.log("Verification result:", result)
 
         if (result.success) {
+          console.log("Payment verified successfully, completing order...")
+          
           // Import SDK dynamically to avoid SSR issues
           const { sdk } = await import("@lib/config")
           
           // Complete the order - backend has already authorized the payment
-          const order = await sdk.store.cart.complete(cartId)
+          const orderResponse = await sdk.store.cart.complete(cartId)
+          
+          console.log("Order completion response:", orderResponse)
           
           // Clear cart from localStorage
           localStorage.removeItem("cart_id")
           
-          // Get country code from localStorage or default
-          const countryCode = localStorage.getItem("country_code") || "dk"
-          
-          // Redirect to order confirmation
-          router.push(`/${countryCode}/order/${order.id}/confirmed`)
+          // Check if order was created successfully
+          if (orderResponse.type === "order" && orderResponse.order) {
+            console.log("✅ Order created successfully:", orderResponse.order.id)
+            // Redirect to order confirmation
+            router.push(`/${countryCode}/order/${orderResponse.order.id}/confirmed`)
+          } else if (orderResponse.type === "cart") {
+            // Cart still exists, order not created
+            console.error("❌ Order creation failed - cart still exists")
+            setError("Order creation failed. Please contact support.")
+          }
         } else {
           setError("Payment verification failed")
         }
@@ -97,7 +119,7 @@ export default function OrderConfirmedPage() {
     }
 
     verifyPayment()
-  }, [searchParams, router])
+  }, [searchParams, router, countryCode])
 
   if (loading) {
     return (
@@ -119,7 +141,7 @@ export default function OrderConfirmedPage() {
             <h1 className="text-2xl font-bold text-red-600 mb-2">Payment Error</h1>
             <p className="text-red-700 mb-4">{error}</p>
             <button
-              onClick={() => router.push("/dk/checkout")}
+              onClick={() => router.push(`/${countryCode}/checkout`)}
               className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
             >
               Return to Checkout

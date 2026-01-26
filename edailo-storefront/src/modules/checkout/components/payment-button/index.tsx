@@ -222,9 +222,48 @@ const EsewaPaymentButton = ({
 
     setSubmitting(true)
 
-    // Store cart ID for verification after redirect
-    if (cart.id) {
-      localStorage.setItem("cart_id", cart.id)
+    // Debug: Log the entire session object
+    console.log("=== Payment Session Debug ===")
+    console.log("Full session:", session)
+    console.log("Session data:", session.data)
+    console.log("Session data keys:", Object.keys(session.data || {}))
+    console.log("Session data values:", Object.values(session.data || {}))
+
+    // CRITICAL: Always use cart.id (the actual Medusa cart ID)
+    // Format: cart_01JJXXXXXX
+    const cartIdToStore = cart.id
+    
+    if (!cartIdToStore) {
+      console.error("❌ No cart ID available!")
+      setErrorMessage("Cart ID not found")
+      setSubmitting(false)
+      return
+    }
+    
+    localStorage.setItem("cart_id", cartIdToStore)
+    console.log("✅ Stored cart ID in localStorage:", cartIdToStore)
+    
+    // Store country code - always use 'dk' for consistency
+    localStorage.setItem("country_code", "dk")
+
+    // Log payment data for debugging
+    console.log("=== eSewa Payment Submission ===")
+    console.log("Cart ID:", cartIdToStore)
+    console.log("Amount:", session.data.amount)
+    console.log("Total Amount:", session.data.total_amount)
+    console.log("Transaction UUID:", session.data.transaction_uuid)
+    console.log("Product Code:", session.data.product_code)
+    console.log("Payment URL:", session.data.payment_url)
+    console.log("Success URL:", session.data.success_url)
+
+    // Check if session data is empty
+    if (!session.data.amount || !session.data.total_amount || !session.data.transaction_uuid) {
+      console.error("❌ Payment session data is incomplete!")
+      console.error("This means the backend's initiatePayment failed or wasn't called")
+      console.error("Check backend logs for errors")
+      setErrorMessage("Payment session not properly initialized. Please refresh and try again.")
+      setSubmitting(false)
+      return
     }
 
     // Create and submit form to eSewa
@@ -245,6 +284,19 @@ const EsewaPaymentButton = ({
       signed_field_names: "total_amount,transaction_uuid,product_code",
       signature: session.data.signature,
     }
+
+    // Validate required fields
+    const requiredFields = ['amount', 'total_amount', 'transaction_uuid', 'product_code', 'signature']
+    const missingFields = requiredFields.filter(field => !fields[field])
+    
+    if (missingFields.length > 0) {
+      console.error("❌ Missing required fields:", missingFields)
+      setErrorMessage(`Missing required fields: ${missingFields.join(', ')}`)
+      setSubmitting(false)
+      return
+    }
+
+    console.log("✅ All required fields present, submitting to eSewa...")
 
     Object.entries(fields).forEach(([key, value]) => {
       const input = document.createElement("input")
