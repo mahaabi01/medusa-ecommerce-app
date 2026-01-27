@@ -1711,7 +1711,7 @@
     tailwindcss "^3.4.3"
     vite "^5.4.21"
 
-"@medusajs/admin-sdk@2.12.5":
+"@medusajs/admin-sdk@2.12.4", "@medusajs/admin-sdk@2.12.5":
   version "2.12.5"
   resolved "https://registry.npmjs.org/@medusajs/admin-sdk/-/admin-sdk-2.12.5.tgz"
   integrity sha512-KxNN/Iuu+o8TgWZHbR4RWxBNZF9bON5UWfBd2VDHvU5pdWewXuizroQSLL+QF+PCWmpxFijQy0v128XzgyHXZg==
@@ -1817,7 +1817,7 @@
   resolved "https://registry.npmjs.org/@medusajs/cart/-/cart-2.12.5.tgz"
   integrity sha512-T1+P2sX3I4E3FC4qAC2vaom6u72dmNbeYaC04sAa/jvuQBPtB8yy4Js/uSbO7+fDU8WtDWk+740pBKFFhZ3yQg==
 
-"@medusajs/cli@2.12.5":
+"@medusajs/cli@2.12.4", "@medusajs/cli@2.12.5":
   version "2.12.5"
   resolved "https://registry.npmjs.org/@medusajs/cli/-/cli-2.12.5.tgz"
   integrity sha512-MwR8/8yjJKSmWPn+BmrbK3mxKfTwmc4PEPABt4FqMtMIxFjJUud5473kWt6/mcFfULUjwBBE63Km3hPfqSCFqg==
@@ -1980,7 +1980,7 @@
   resolved "https://registry.npmjs.org/@medusajs/file/-/file-2.12.5.tgz"
   integrity sha512-57J7XanzKNJ8fU+BEu9eyy1Ll6BN9zI7wkSPff5L5S3O4xxFr5yEA4u3YzTEc1+FQK7a2UbzaWgMn2TPMUZK0g==
 
-"@medusajs/framework@2.12.5":
+"@medusajs/framework@2.12.4", "@medusajs/framework@2.12.5":
   version "2.12.5"
   resolved "https://registry.npmjs.org/@medusajs/framework/-/framework-2.12.5.tgz"
   integrity sha512-6gLrXzP4z+SmUXm377iHj2Fw4d2p+qTYmW4o6lXcpIsEiD6HAxu90VzSQhNvU3xbrFIubtxi+P67bAfaVkj8Bg==
@@ -2020,7 +2020,7 @@
   resolved "https://registry.npmjs.org/@medusajs/fulfillment/-/fulfillment-2.12.5.tgz"
   integrity sha512-dn56eHL/tOzXRQnmWpxgfFLVxFNUNBccgE+K4rxpDVPPAvR/qkt4uS0Ltb2KJkWMhFstobLGzh1tdcVty8nJow==
 
-"@medusajs/icons@2.12.5":
+"@medusajs/icons@2.12.4", "@medusajs/icons@2.12.5":
   version "2.12.5"
   resolved "https://registry.npmjs.org/@medusajs/icons/-/icons-2.12.5.tgz"
   integrity sha512-aOhhT2xcIHVYBMGaNjHBCekP592xyM7N0BM9LVWohc9dk3Z5df6tHBn9D8dW7wqnvaDh0BIrAVanmaiOHJPqBg==
@@ -2065,7 +2065,7 @@
   resolved "https://registry.npmjs.org/@medusajs/locking/-/locking-2.12.5.tgz"
   integrity sha512-dKt7WuYcQEvERtt8EsnuaVltxxRSxcsu7ZK6I0i+HUrISGG3R3cGglGhnbdgKUOIbBWo924yAIZbWisu0pK8Aw==
 
-"@medusajs/medusa@2.12.5":
+"@medusajs/medusa@2.12.4", "@medusajs/medusa@2.12.5":
   version "2.12.5"
   resolved "https://registry.npmjs.org/@medusajs/medusa/-/medusa-2.12.5.tgz"
   integrity sha512-jWzd3Kjo9rMgsZqHo7cB2gQ2OpiNNkQAy9kmodNXfDPDe6UcUSUGe++nyz/EszemsIITV2Xq9phO5I9fh1+23w==
@@ -2252,7 +2252,7 @@
     remove-trailing-slash "^0.1.1"
     uuid "^9.0.0"
 
-"@medusajs/test-utils@2.12.5":
+"@medusajs/test-utils@2.12.4", "@medusajs/test-utils@2.12.5":
   version "2.12.5"
   resolved "https://registry.npmjs.org/@medusajs/test-utils/-/test-utils-2.12.5.tgz"
   integrity sha512-XLZH5YwifVEdzn40uDPlIL1RK98u2bAPCSe33sHCh0a5NGadv9tOk7o+aOB4c/ZTwKcpgwwm1qExfXlf3WGHVw==
@@ -2275,7 +2275,7 @@
   dependencies:
     bignumber.js "^9.1.2"
 
-"@medusajs/ui@4.0.33":
+"@medusajs/ui@4.0.25", "@medusajs/ui@4.0.33":
   version "4.0.33"
   resolved "https://registry.npmjs.org/@medusajs/ui/-/ui-4.0.33.tgz"
   integrity sha512-dZz5mjGfkAZxLypFBnZ9rZaCuWg06tHrkH6oFbO72WZ0J6hjMuxT/21tKt4GFlQVgn2Lgnf7OXdYIE630M+U0A==
@@ -7011,6 +7011,11 @@ dotenv@^16.4.5:
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.6.1.tgz"
   integrity sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==
 
+dotenv@^17.2.3:
+  version "17.2.3"
+  resolved "https://registry.npmjs.org/dotenv/-/dotenv-17.2.3.tgz"
+  integrity sha512-JVUnt+DUIzu87TABbhPmNfVdBDt18BLOWjMUFJMSi/Qqg7NTYtabbvSNJGOJ7afbRuv9D/lngizHtP7QyLQ+9w==
+
 dotenv@16.5.0:
   version "16.5.0"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.5.0.tgz"
@@ -8847,6 +8852,12 @@ media-typer@0.3.0:
   resolved "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
+"medusa-plugin-wishlist@file:.yalc/medusa-plugin-wishlist":
+  version "0.0.1"
+  resolved "file:.yalc/medusa-plugin-wishlist"
+  dependencies:
+    dotenv "^17.2.3"
+
 merge-descriptors@1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.3.tgz"
@@ -9477,7 +9488,22 @@ picocolors@^1.1.0, picocolors@^1.1.1:
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz"
   integrity sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==
 
-picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1, picomatch@3.x:
+picomatch@^2.0.4:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
+  integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
+
+picomatch@^2.2.1:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
+  integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
+
+picomatch@^2.2.3:
+  version "2.3.1"
+  resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
+  integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
+
+picomatch@^2.3.1:
   version "2.3.1"
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
@@ -9486,6 +9512,11 @@ picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1, picomatc
   version "4.0.3"
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz"
   integrity sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==
+
+picomatch@3.x:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/picomatch/-/picomatch-3.0.1.tgz"
+  integrity sha512-I3EurrIQMlRc9IaAZnqRR044Phh2DXY+55o7uJ0V+hYZAcQYSuFWsc9q5PvyDHUSCe1Qxn/iBz+78s86zWnGag==
 
 pify@^2.3.0:
   version "2.3.0"
