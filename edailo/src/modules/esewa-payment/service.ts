@@ -161,7 +161,14 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       console.log("Payment session data:", paymentSessionData)
       console.log("Context:", context)
 
-      const { transaction_code, transaction_uuid } = context
+      // CRITICAL FIX: In Medusa v2, the context is nested inside paymentSessionData
+      // Extract it from the correct location
+      const actualContext = (paymentSessionData.context as Record<string, unknown>) || context || {}
+      const { transaction_code, transaction_uuid } = actualContext
+
+      console.log("Extracted context:", actualContext)
+      console.log("Transaction code:", transaction_code)
+      console.log("Transaction UUID:", transaction_uuid)
 
       if (!transaction_code || !transaction_uuid) {
         console.error("❌ Missing transaction_code or transaction_uuid")
@@ -169,7 +176,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
         return {
           status: PaymentSessionStatus.ERROR,
           data: {
-            ...paymentSessionData,
+            ...(paymentSessionData.data as Record<string, unknown>),
             status: "ERROR",
             error: "Missing transaction details",
           },
@@ -179,13 +186,18 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       console.log("Verifying payment with eSewa API...")
       console.log("- Transaction Code:", transaction_code)
       console.log("- Transaction UUID:", transaction_uuid)
-      console.log("- Total Amount:", paymentSessionData.total_amount)
+      
+      // Get total_amount from the nested data object
+      const sessionData = paymentSessionData.data as Record<string, unknown>
+      const totalAmount = sessionData.total_amount as string
+
+      console.log("- Total Amount:", totalAmount)
 
       // Verify payment with eSewa
       const verificationResult = await this.verifyPayment(
         transaction_code as string,
         transaction_uuid as string,
-        paymentSessionData.total_amount as string
+        totalAmount
       )
 
       console.log("eSewa verification result:", verificationResult)
@@ -196,7 +208,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
         const authorizedData = {
           status: PaymentSessionStatus.AUTHORIZED,
           data: {
-            ...paymentSessionData,
+            ...sessionData,
             status: "COMPLETE",
             transaction_code,
             verified_at: new Date().toISOString(),
@@ -218,7 +230,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       return {
         status: PaymentSessionStatus.ERROR,
         data: {
-          ...paymentSessionData,
+          ...sessionData,
           status: "ERROR",
           error: "Payment verification failed with eSewa",
           verification_result: verificationResult,
@@ -227,10 +239,11 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
     } catch (error) {
       console.error("❌ eSewa authorize payment error:", error)
       // Return error status with data
+      const sessionData = (paymentSessionData.data as Record<string, unknown>) || {}
       return {
         status: PaymentSessionStatus.ERROR,
         data: {
-          ...paymentSessionData,
+          ...sessionData,
           status: "ERROR",
           error: error.message || "Authorization failed",
         },
