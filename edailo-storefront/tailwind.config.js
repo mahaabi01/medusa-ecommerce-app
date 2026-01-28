@@ -37,7 +37,7 @@ module.exports = {
         navbar: "hsl(var(--navbar))",
         footer: "hsl(var(--footer))",
         text: "hsl(var(--foreground))",
-        "footer-text": "hsl(var(--footer-foreground))",
+        "white-text": "hsl(var(--white-foreground))",
 
         primary: "hsl(var(--primary))",
         "primary-text": "hsl(var(--primary-foreground))",

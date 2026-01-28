@@ -3,7 +3,7 @@ import { listCollections } from "@lib/data/collections";
 import { Text, clx } from "@medusajs/ui";
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link";
-import MedusaCTA from "@modules/layout/components/medusa-cta";
+
 import { siteConfig } from "../../../../../config/siteConfig";
 
 export default async function Footer() {
@@ -17,7 +17,7 @@ export default async function Footer() {
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-footer-text hover:text-ui-fg-base uppercase"
+              className="txt-compact-xlarge-plus text-white-text hover:text-ui-fg-base uppercase"
             >
               {siteConfig.companyName}
             </LocalizedClientLink>
@@ -27,7 +27,7 @@ export default async function Footer() {
             {/* Categories */}
             {productCategories?.length > 0 && (
               <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus text-footer-text">
+                <span className="txt-small-plus text-white-text">
                   {siteConfig.footer.sectionLabels.categories}
                 </span>
                 <ul className="grid grid-cols-1 gap-2">
@@ -43,7 +43,7 @@ export default async function Footer() {
 
                     return (
                       <li
-                        className="flex flex-col gap-2 text-footer-text txt-small"
+                        className="flex flex-col gap-2 text-white-text txt-small"
                         key={c.id}
                       >
                         <LocalizedClientLink
@@ -79,7 +79,7 @@ export default async function Footer() {
             {/* Collections */}
             {collections?.length > 0 && (
               <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus text-footer-text">
+                <span className="txt-small-plus text-white-text">
                   {siteConfig.footer.sectionLabels.collections}
                 </span>
                 <ul
@@ -104,10 +104,10 @@ export default async function Footer() {
 
             {/* Medusa Links */}
             <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus text-footer-text">
+              <span className="txt-small-plus text-white-text">
                 {siteConfig.footer.sectionLabels.edailo}
               </span>
-              <ul className="grid grid-cols-1 gap-y-2 text-footer-text txt-small">
+              <ul className="grid grid-cols-1 gap-y-2 text-white-text txt-small">
                 {siteConfig.footer.links.map((link) => (
                   <li key={link.name}>
                     <a
@@ -126,12 +126,12 @@ export default async function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="flex w-full mb-16 justify-between text-footer-text">
+        <div className="flex w-full mb-16 justify-between text-white-text">
           <Text className="txt-compact-small">
             © {new Date().getFullYear()} {siteConfig.companyName}.{" "}
             {siteConfig.footer.copyrightText}
           </Text>
-          <MedusaCTA />
+    
         </div>
       </div>
     </footer>
