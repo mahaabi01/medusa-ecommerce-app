@@ -4,6 +4,7 @@ import ItemsPreviewTemplate from "@modules/cart/templates/preview"
 import DiscountCode from "@modules/checkout/components/discount-code"
 import CartTotals from "@modules/common/components/cart-totals"
 import Divider from "@modules/common/components/divider"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 const CheckoutSummary = ({ cart }: { cart: any }) => {
   return (
@@ -14,7 +15,7 @@ const CheckoutSummary = ({ cart }: { cart: any }) => {
           level="h2"
           className="flex flex-row text-3xl-regular items-baseline"
         >
-          In your Cart
+          {siteConfig.chechout.inCart}
         </Heading>
         <Divider className="my-6" />
         <CartTotals totals={cart} />

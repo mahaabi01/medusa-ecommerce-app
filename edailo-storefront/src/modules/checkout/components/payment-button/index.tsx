@@ -7,6 +7,7 @@ import { Button } from "@medusajs/ui"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import React, { useState } from "react"
 import ErrorMessage from "../error-message"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 type PaymentButtonProps = {
   cart: HttpTypes.StoreCart
@@ -40,7 +41,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
         <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
       )
     default:
-      return <Button disabled>Select a payment method</Button>
+      return <Button disabled>{siteConfig.chechout.selectPaymentMethod}</Button>
   }
 }
 
@@ -141,7 +142,7 @@ const StripePaymentButton = ({
         isLoading={submitting}
         data-testid={dataTestId}
       >
-        Place order
+        {siteConfig.chechout.placeOrder}
       </Button>
       <ErrorMessage
         error={errorMessage}
@@ -180,7 +181,7 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         size="large"
         data-testid="submit-order-button"
       >
-        Place order
+        {siteConfig.chechout.placeOrder}
       </Button>
       <ErrorMessage
         error={errorMessage}

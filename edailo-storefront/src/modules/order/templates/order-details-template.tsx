@@ -9,6 +9,7 @@ import OrderDetails from "@modules/order/components/order-details"
 import OrderSummary from "@modules/order/components/order-summary"
 import ShippingDetails from "@modules/order/components/shipping-details"
 import React from "react"
+import { siteConfig } from "../../../../config/siteConfig"
 
 type OrderDetailsTemplateProps = {
   order: HttpTypes.StoreOrder
@@ -20,13 +21,13 @@ const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
   return (
     <div className="flex flex-col justify-center gap-y-4">
       <div className="flex gap-2 justify-between items-center">
-        <h1 className="text-2xl-semi">Order details</h1>
+        <h1 className="text-2xl-semi">{siteConfig.messages.orders.detail}</h1>
         <LocalizedClientLink
           href="/account/orders"
           className="flex gap-2 items-center text-ui-fg-subtle hover:text-ui-fg-base"
           data-testid="back-to-overview-button"
         >
-          <XMark /> Back to overview
+          <XMark /> {siteConfig.messages.orders.detail}
         </LocalizedClientLink>
       </div>
       <div

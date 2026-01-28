@@ -110,3 +110,27 @@
     @apply text-[32px] leading-[44px] font-semibold;
   }
 }
+
+
+@layer base {
+  :root {
+    --navbar: 86 0% 100%;
+    --footer: 237 100% 8.4%;
+    --foreground: 0 0% 0%;
+    --footer-foreground: 0 0% 100%;
+     --primary: 196 98% 43%;
+    --primary-foreground: 0 0% 100%;
+     --success: 160 84% 39%;
+    --card-bg :0, 0%, 87%;
+  }
+  .dark {
+    --navbar: 45 90% 2%;
+    --footer: 222 47% 11%;
+   --foreground: 0 0% 100%; 
+   --footer-foreground: 0 0% 100%;
+    --primary: 196 98% 50%;
+    --primary-foreground: 0 0% 100%;
+      --success: 160 70% 45%;
+    --card-bg :0, 0%, 87%;
+  }
+}

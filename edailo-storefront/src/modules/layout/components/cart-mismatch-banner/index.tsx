@@ -5,6 +5,7 @@ import { ExclamationCircleSolid } from "@medusajs/icons"
 import { StoreCart, StoreCustomer } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
 import { useState } from "react"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 function CartMismatchBanner(props: {
   customer: StoreCustomer
@@ -35,7 +36,7 @@ function CartMismatchBanner(props: {
       <div className="flex flex-col small:flex-row small:gap-2 gap-1 items-center">
         <span className="flex items-center gap-1">
           <ExclamationCircleSolid className="inline" />
-          Something went wrong when we tried to transfer your cart
+          {siteConfig.home.cart.somethingwrong}
         </span>
 
         <span>·</span>

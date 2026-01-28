@@ -2,6 +2,7 @@ import { clx } from "@medusajs/ui"
 
 import { getProductPrice } from "@lib/util/get-product-price"
 import { HttpTypes } from "@medusajs/types"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 export default function ProductPrice({
   product,
@@ -39,7 +40,7 @@ export default function ProductPrice({
       {selectedPrice.price_type === "sale" && (
         <>
           <p>
-            <span className="text-ui-fg-subtle">Original: </span>
+            <span className="text-ui-fg-subtle">{siteConfig.product.original}</span>
             <span
               className="line-through"
               data-testid="original-product-price"

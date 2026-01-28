@@ -10,6 +10,7 @@ import { CardElement } from "@stripe/react-stripe-js"
 import { StripeCardElementOptions } from "@stripe/stripe-js"
 import PaymentTest from "../payment-test"
 import { StripeContext } from "../payment-wrapper/stripe-wrapper"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 type PaymentContainerProps = {
   paymentProviderId: string
@@ -108,7 +109,7 @@ export const StripeCardContainer = ({
         (stripeReady ? (
           <div className="my-4 transition-all duration-150 ease-in-out">
             <Text className="txt-medium-plus text-ui-fg-base mb-1">
-              Enter your card details:
+              {siteConfig.chechout.carddetail}
             </Text>
             <CardElement
               options={useOptions as StripeCardElementOptions}

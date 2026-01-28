@@ -11,6 +11,7 @@ import Modal from "@modules/common/components/modal"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
 import { HttpTypes } from "@medusajs/types"
 import { addCustomerAddress } from "@lib/data/customer"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 const AddAddress = ({
   region,
@@ -153,7 +154,7 @@ const AddAddress = ({
                 className="h-10"
                 data-testid="cancel-button"
               >
-                Cancel
+                {siteConfig.buttons.cancel}
               </Button>
               <SubmitButton data-testid="save-button">Save</SubmitButton>
             </div>

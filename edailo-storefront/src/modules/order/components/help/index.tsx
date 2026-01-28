@@ -1,19 +1,20 @@
 import { Heading } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import React from "react"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 const Help = () => {
   return (
     <div className="mt-6">
-      <Heading className="text-base-semi">Need help?</Heading>
+      <Heading className="text-base-semi">{siteConfig.order.needhelp}</Heading>
       <div className="text-base-regular my-2">
         <ul className="gap-y-2 flex flex-col">
           <li>
-            <LocalizedClientLink href="/contact">Contact</LocalizedClientLink>
+            <LocalizedClientLink href="/contact">{siteConfig.order.contact}</LocalizedClientLink>
           </li>
           <li>
             <LocalizedClientLink href="/contact">
-              Returns & Exchanges
+              {siteConfig.order.return}
             </LocalizedClientLink>
           </li>
         </ul>

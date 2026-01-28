@@ -5,6 +5,7 @@ import { Button } from "@medusajs/ui"
 import OrderCard from "../order-card"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { HttpTypes } from "@medusajs/types"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 const OrderOverview = ({ orders }: { orders: HttpTypes.StoreOrder[] }) => {
   if (orders?.length) {
@@ -27,14 +28,14 @@ const OrderOverview = ({ orders }: { orders: HttpTypes.StoreOrder[] }) => {
       className="w-full flex flex-col items-center gap-y-4"
       data-testid="no-orders-container"
     >
-      <h2 className="text-large-semi">Nothing to see here</h2>
+      <h2 className="text-large-semi">{siteConfig.messages.orders.noOrdersTitle}</h2>
       <p className="text-base-regular">
-        You don&apos;t have any orders yet, let us change that {":)"}
+       {siteConfig.messages.orders.noOrdersDescription} {":)"}
       </p>
       <div className="mt-4">
         <LocalizedClientLink href="/" passHref>
           <Button data-testid="continue-shopping-button">
-            Continue shopping
+           {siteConfig.buttons.continueShopping}
           </Button>
         </LocalizedClientLink>
       </div>

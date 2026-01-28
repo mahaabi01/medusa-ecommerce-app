@@ -1,6 +1,7 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ChevronDown from "@modules/common/icons/chevron-down"
 import MedusaCTA from "@modules/layout/components/medusa-cta"
+import { siteConfig } from "../../../../config/siteConfig"
 
 export default function CheckoutLayout({
   children,
@@ -18,10 +19,10 @@ export default function CheckoutLayout({
           >
             <ChevronDown className="rotate-90" size={16} />
             <span className="mt-px hidden small:block txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base ">
-              Back to shopping cart
+             {siteConfig.checkout.backToCartText}
             </span>
             <span className="mt-px block small:hidden txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base">
-              Back
+              {siteConfig.checkout.backText}
             </span>
           </LocalizedClientLink>
           <LocalizedClientLink
@@ -29,7 +30,7 @@ export default function CheckoutLayout({
             className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
             data-testid="store-link"
           >
-            Medusa Store
+           {siteConfig.companyName}
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>

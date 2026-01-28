@@ -15,6 +15,7 @@ import {
   deleteCustomerAddress,
   updateCustomerAddress,
 } from "@lib/data/customer"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 type EditAddressProps = {
   region: HttpTypes.StoreRegion
@@ -108,7 +109,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
             data-testid="address-edit-button"
           >
             <Edit />
-            Edit
+           {siteConfig.buttons.edit}
           </button>
           <button
             className="text-small-regular text-ui-fg-base flex items-center gap-x-2"
@@ -116,7 +117,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
             data-testid="address-delete-button"
           >
             {removing ? <Spinner /> : <Trash />}
-            Remove
+            {siteConfig.buttons.remove}
           </button>
         </div>
       </div>
@@ -225,7 +226,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 className="h-10"
                 data-testid="cancel-button"
               >
-                Cancel
+                {siteConfig.buttons.cancel}
               </Button>
               <SubmitButton data-testid="save-button">Save</SubmitButton>
             </div>

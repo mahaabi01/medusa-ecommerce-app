@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-
+import { siteConfig } from "../../../../../config/siteConfig"
 import { listRegions } from "@lib/data/regions"
 import { listLocales } from "@lib/data/locales"
 import { getLocale } from "@lib/data/locale-actions"
@@ -7,6 +7,7 @@ import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
+import Image from "next/image"
 
 export default async function Nav() {
   const [regions, locales, currentLocale] = await Promise.all([
@@ -17,7 +18,7 @@ export default async function Nav() {
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
+      <header className="relative h-16 mx-auto border-b duration-200 bg-navbar border-ui-border-base">
         <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
@@ -31,7 +32,7 @@ export default async function Nav() {
               className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
               data-testid="nav-store-link"
             >
-              Medusa Store
+             <Image src={siteConfig.logo.src} alt={siteConfig.logo.alt} width={120} height={36} />
             </LocalizedClientLink>
           </div>
 
@@ -39,20 +40,20 @@ export default async function Nav() {
             <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
-                href="/account"
+                href={siteConfig.navLinks.account.href}
                 data-testid="nav-account-link"
               >
-                Account
+                {siteConfig.navLinks.account.label}
               </LocalizedClientLink>
             </div>
             <Suspense
               fallback={
                 <LocalizedClientLink
                   className="hover:text-ui-fg-base flex gap-2"
-                  href="/cart"
+                  href={siteConfig.navLinks.cart.href}
                   data-testid="nav-cart-link"
                 >
-                  Cart (0)
+                  {siteConfig.navLinks.cart.label}
                 </LocalizedClientLink>
               }
             >
