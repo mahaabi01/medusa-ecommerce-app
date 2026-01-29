@@ -2,34 +2,6 @@ import { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/
 import { createWishlistWorkflow } from "../../../../../workflows/create-wishlist"
 import { MedusaError } from "@medusajs/framework/utils"
 
-export async function GET(
-  req: AuthenticatedMedusaRequest,
-  res: MedusaResponse
-) {
-  const query = req.scope.resolve("query")
-
-  const { data } = await query.graph({
-    entity: "wishlist",
-    fields: ["*", "items.*", "items.product_variant.*"],
-    filters: {
-      customer_id: req.auth_context.actor_id,
-    },
-  })
-
-  if (!data.length) {
-    throw new MedusaError(
-      MedusaError.Types.NOT_FOUND,
-      "No wishlist found for customer"
-    )
-  }
-
-  return res.json({
-    wishlist: data[0],
-  })
-}
-
-
-
 export async function POST(
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
@@ -52,3 +24,33 @@ export async function POST(
     wishlist: result.wishlist,
   })
 }
+
+// ================================
+
+export async function GET(
+  req: AuthenticatedMedusaRequest,
+  res: MedusaResponse
+) {
+  const query = req.scope.resolve("query")
+  console.log("Fetching wishlist for customer:", req.auth_context.actor_id)
+  const { data } = await query.graph({
+    entity: "wishlist",
+    fields: ["*", "items.*", "items.product_variant.*"],
+    filters: {
+      customer_id: req.auth_context.actor_id,
+    },
+  })
+
+  if (!data.length) {
+    throw new MedusaError(
+      MedusaError.Types.NOT_FOUND,
+      "No wishlist found for customer"
+    )
+  }
+
+  return res.json({
+    wishlist: data[0],
+  })
+}
+
+// ================================

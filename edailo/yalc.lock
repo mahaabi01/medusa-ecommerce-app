@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "medusa-plugin-wishlist": {
-      "signature": "d5e747a7073f7d72357ef8b397ce72c2",
+      "signature": "8e10847f70d27b2f5b189c7e31232f4c",
       "file": true
     }
   }
