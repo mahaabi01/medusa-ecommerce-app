@@ -1,4 +1,5 @@
 import { listProductsWithSort } from "@lib/data/products"
+import { searchProducts } from "@lib/data/search"
 import { getRegion } from "@lib/data/regions"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
@@ -21,6 +22,7 @@ export default async function PaginatedProducts({
   categoryId,
   productsIds,
   countryCode,
+  searchQuery,
 }: {
   sortBy?: SortOptions
   page: number
@@ -28,43 +30,78 @@ export default async function PaginatedProducts({
   categoryId?: string
   productsIds?: string[]
   countryCode: string
+  searchQuery?: string
 }) {
-  const queryParams: PaginatedProductsParams = {
-    limit: 12,
-  }
-
-  if (collectionId) {
-    queryParams["collection_id"] = [collectionId]
-  }
-
-  if (categoryId) {
-    queryParams["category_id"] = [categoryId]
-  }
-
-  if (productsIds) {
-    queryParams["id"] = productsIds
-  }
-
-  if (sortBy === "created_at") {
-    queryParams["order"] = "created_at"
-  }
-
   const region = await getRegion(countryCode)
 
   if (!region) {
     return null
   }
 
-  let {
-    response: { products, count },
-  } = await listProductsWithSort({
-    page,
-    queryParams,
-    sortBy,
-    countryCode,
-  })
+  let products
+  let count
+
+  // If search query exists, use search function
+  if (searchQuery && searchQuery.trim().length > 0) {
+    const searchResults = await searchProducts({
+      query: searchQuery,
+      countryCode,
+      limit: 100, // Get more results for pagination
+    })
+    
+    products = searchResults.products
+    count = searchResults.count
+    
+    // Apply pagination to search results
+    const startIndex = (page - 1) * PRODUCT_LIMIT
+    const endIndex = startIndex + PRODUCT_LIMIT
+    products = products.slice(startIndex, endIndex)
+  } else {
+    // Normal product listing
+    const queryParams: PaginatedProductsParams = {
+      limit: 12,
+    }
+
+    if (collectionId) {
+      queryParams["collection_id"] = [collectionId]
+    }
+
+    if (categoryId) {
+      queryParams["category_id"] = [categoryId]
+    }
+
+    if (productsIds) {
+      queryParams["id"] = productsIds
+    }
+
+    if (sortBy === "created_at") {
+      queryParams["order"] = "created_at"
+    }
+
+    const result = await listProductsWithSort({
+      page,
+      queryParams,
+      sortBy,
+      countryCode,
+    })
+    
+    products = result.response.products
+    count = result.response.count
+  }
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
+
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-ui-fg-subtle text-lg">
+          {searchQuery 
+            ? `No products found for "${searchQuery}". Try different keywords.`
+            : "No products found."}
+        </p>
+      </div>
+    )
+  }
 
   return (
     <>
