@@ -11,7 +11,6 @@ const Hero = () => {
     <HeroSlider/>
 
     <AdSlider />
-    <ImageGallery images={images} />
    </div>
   )
 }
