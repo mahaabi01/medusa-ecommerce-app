@@ -1,9 +1,8 @@
 // app/components/layout/SubNavbar.tsx
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 
 
@@ -18,26 +17,14 @@ const navItems = [
 ] as const;
 
 export default function SubNavbar() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <nav className="fixed left-0 right-0 top-15 md:top-15 bg-[#132440] border-b border-gray-700 z-30 shadow-lg">
+    <nav className="relative bg-[#132440] border-b border-gray-700 shadow-lg">
       <div className="max-w-screen-2xl mx-auto flex items-center h-10 px-4 md:px-8 lg:px-16 xl:px-32">
         {/* Categories menu trigger */}
-        <div
-          className="relative mr-6"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-        >
-          
-           
-     
-          {/* {open && (
-            <div className="absolute left-0 top-full w-[900px] z-[9999]">
-              <CategoriesMegaMenu api={api} />
-            </div>
-          )} */}
+        <div className="relative mr-6">
+          {/* Categories menu can be added here */}
         </div>
 
         {/* Navigation links – visible on lg+ */}

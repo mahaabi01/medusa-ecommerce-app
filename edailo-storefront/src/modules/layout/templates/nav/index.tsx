@@ -19,64 +19,61 @@ export default async function Nav() {
   ])
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-  <header className="relative h-16 mx-auto border-b duration-200 bg-navbar border-ui-border-base">
-    <nav className="content-container flex items-center justify-between w-full h-full text-small-regular">
+    <header className="relative h-16 bg-navbar">
+      <nav className="content-container flex items-center justify-between w-full h-full text-small-regular">
 
-      {/* LEFT: Logo */}
-      <div className="flex-shrink-0 flex items-center h-full">
-        <LocalizedClientLink
-          href="/"
-          className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
-          data-testid="nav-store-link"
-        >
-          <Image
-            src={siteConfig.logo.src}
-            alt={siteConfig.logo.alt}
-            width={120}
-            height={36}
-          />
-        </LocalizedClientLink>
-      </div>
-
-      {/* CENTER: Big Search Bar */}
-      <div className="flex-1 flex justify-center px-5">
-        <div className="w-full max-w-xl">
-          <SearchBar />
-        </div>
-      </div>
-
-      {/* RIGHT: Account + Cart */}
-      <div className="flex items-center gap-x-6 flex-shrink-0">
-        <div className="hidden small:flex items-center gap-x-6 h-full">
+        {/* LEFT: Logo */}
+        <div className="flex-shrink-0 flex items-center h-full">
           <LocalizedClientLink
-            className="text-white hover:text-ui-fg-base"
-            href={siteConfig.navLinks.account.href}
-            data-testid="nav-account-link"
+            href="/"
+            className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+            data-testid="nav-store-link"
           >
-            <Profile className="w-10 h-10 text-white-text" />
-            
+            <Image
+              src={siteConfig.logo.src}
+              alt={siteConfig.logo.alt}
+              width={120}
+              height={36}
+            />
           </LocalizedClientLink>
         </div>
 
-        <Suspense
-          fallback={
+        {/* CENTER: Big Search Bar */}
+        <div className="flex-1 flex justify-center px-5">
+          <div className="w-full max-w-xl">
+            <SearchBar />
+          </div>
+        </div>
+
+        {/* RIGHT: Account + Cart */}
+        <div className="flex items-center gap-x-6 flex-shrink-0">
+          <div className="hidden small:flex items-center gap-x-6 h-full">
             <LocalizedClientLink
-              className="text-white hover:text-ui-fg-base flex gap-2"
-              href={siteConfig.navLinks.cart.href}
-              data-testid="nav-cart-link"
+              className="text-white hover:text-ui-fg-base"
+              href={siteConfig.navLinks.account.href}
+              data-testid="nav-account-link"
             >
-              {siteConfig.navLinks.cart.label}
+              <Profile className="w-10 h-10 text-white-text" />
+              
             </LocalizedClientLink>
-          }
-        >
-          <CartButton />
-        </Suspense>
-      </div>
+          </div>
 
-    </nav>
-  </header>
-</div>
+          <Suspense
+            fallback={
+              <LocalizedClientLink
+                className="text-white hover:text-ui-fg-base flex gap-2"
+                href={siteConfig.navLinks.cart.href}
+                data-testid="nav-cart-link"
+              >
+                {siteConfig.navLinks.cart.label}
+              </LocalizedClientLink>
+            }
+          >
+            <CartButton />
+          </Suspense>
+        </div>
 
+      </nav>
+    </header>
   )
 }

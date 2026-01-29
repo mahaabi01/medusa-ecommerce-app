@@ -27,11 +27,13 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <Nav />
+      <div className="sticky top-0 inset-x-0 z-50">
+        <Nav />
+        <SubNavbar />
+      </div>
       {customer && cart && (
         <CartMismatchBanner customer={customer} cart={cart} />
       )}
-    <SubNavbar/>
       {cart && (
         <FreeShippingPriceNudge
           variant="popup"
