@@ -17,6 +17,7 @@ import Thumbnail from "@modules/products/components/thumbnail"
 import { usePathname } from "next/navigation"
 import { Fragment, useEffect, useRef, useState } from "react"
 import { siteConfig } from "../../../../../config/siteConfig"
+import CartIcon from "@modules/common/icons/cart"
 
 const CartDropdown = ({
   cart: cartState,
@@ -83,10 +84,21 @@ const CartDropdown = ({
       <Popover className="relative h-full">
         <PopoverButton className="h-full">
           <LocalizedClientLink
-            className=" text-white-text hover:text-ui-fg-base"
+            className="text-white-text hover:text-ui-fg-base flex items-center"
             href="/cart"
             data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+            aria-label={`Cart with ${totalItems} items`}
+          >
+            <div className="relative">
+              <CartIcon className="w-9 h-9 text-white-text" />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-1 inline-flex items-center justify-center min-w-[20px] h-5 px-1 text-[12px] font-semibold text-white bg-red-500 rounded-full">
+                  {totalItems}
+                </span>
+              )}
+            </div>
+            <span className="sr-only">Cart, {totalItems} items</span>
+          </LocalizedClientLink>
         </PopoverButton>
         <Transition
           show={cartDropdownOpen}

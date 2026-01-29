@@ -83,6 +83,13 @@ export default function Slider({
                 <div className="max-w-4xl text-center md:text-left mx-auto w-full">
                   <h1
                     className={`${titleClass} font-bold leading-tight text-white drop-shadow-2xl`}
+                    style={{
+                      fontFamily:
+                        'Medusa, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif',
+                      // Responsive, fixed-size relative to viewport height so it scales with the slider
+                      fontSize: 'clamp(1.75rem, 5vh, 4.5rem)',
+                      lineHeight: 1.05,
+                    }}
                   >
                     {slide.title}
                   </h1>

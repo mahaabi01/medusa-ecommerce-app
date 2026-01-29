@@ -52,6 +52,48 @@ export const siteConfig = {
       somethingwrong:"Something went wrong when we tried to transfer your cart",
       language:"Language:"
     }
+    ,
+    // Hero slides content for homepage
+    heroSlides: [
+      {
+        title: "Freshness You Can Trust, Savings You Will Love!",
+        image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=2070",
+        cta1: { label: "Shop Now", href: "/store" },
+        cta2: { label: "Explore Now", href: "/collections" },
+      },
+      {
+        title: "Premium Quality Groceries Delivered Fresh Daily",
+        image: "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=2070",
+        cta1: { label: "Shop Now", href: "/store" },
+        cta2: { label: "Explore Now", href: "/collections" },
+      },
+      {
+        title: "Up to 50% Off on Fresh Produce & Essentials!",
+        image: "https://images.unsplash.com/photo-1608686207856-001b95aac8f5?w=2070",
+        cta1: { label: "Shop Now", href: "/store" },
+        cta2: { label: "Explore Now", href: "/collections" },
+      },
+    ],
+    // Ad banner content for homepage (full width banner)
+    adBanner: {
+      title: "Limited Time: Free Shipping on Orders Over $50",
+      subtitle: "Shop our curated selection — new arrivals added daily",
+      cta: { label: "Shop Now", href: "/store" },
+      // Optional slides for ad banner (images will be shown like main slider)
+      slides: [
+        {
+          title: "Limited Time: Free Shipping on Orders Over $50",
+          image: "https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?w=2080",
+          cta: { label: "Shop Now", href: "/store" },
+        },
+        {
+          title: "New Arrivals — Fresh Everyday",
+          image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=2080",
+          cta: { label: "Explore", href: "/collections" },
+        },
+      ],
+      heightClass: "h-[44vh] md:h-[50vh]",
+    },
   },
   customer:{
     service:"Customer Service",
@@ -207,18 +249,33 @@ export const siteConfig = {
   },
   footer: {
     copyrightText: "All rights reserved.",
-    sectionLabels: {
-      categories: "Categories",
-      collections: "Collections",
-      edailo: "Edailo",
+    company: {
+      name: "EDAiLO Market",
+      description:
+        "EDAiLO Market is a modern e-commerce platform providing a seamless and secure shopping experience.",
     },
-    links: [
-      { name: "GitHub", href: "https://github.com/medusajs" },
-      { name: "Documentation", href: "https://docs.medusajs.com" },
+    columns: [
       {
-        name: "Source code",
-        href: "https://github.com/medusajs/nextjs-starter-medusa",
+        title: "Company",
+        links: [
+          { label: "About Us", href: "/about" },
+          { label: "Contact", href: "/contact" },
+          { label: "Products", href: "/products" },
+        ],
       },
+      {
+        title: "Support",
+        links: [
+          { label: "Privacy Policy", href: "/privacy-policy" },
+          { label: "Terms & Conditions", href: "/terms" },
+          { label: "FAQ", href: "/faq" },
+        ],
+      },
+    ],
+    social: [
+      { label: "Facebook", href: "#" },
+      { label: "Instagram", href: "#" },
+      { label: "Twitter", href: "#" },
     ],
   },
 } 

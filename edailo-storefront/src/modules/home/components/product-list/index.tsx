@@ -88,7 +88,7 @@ export default function ProductList({
   type = "featured",
 }: ProductListProps) {
   return (
-    <section className="w-full py-8 md:py-12">
+    <section className="w-full py-6 md:py-8">
       <div className="content-container">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-6 md:mb-8 gap-3">
           <div className="space-y-1">
