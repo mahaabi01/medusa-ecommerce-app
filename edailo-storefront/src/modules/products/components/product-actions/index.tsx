@@ -1,10 +1,9 @@
 "use client"
 
-import { addToCart } from "@lib/data/cart"
+import { addToCart, buyNow } from "@lib/data/cart"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
-import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/product-actions/option-select"
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
@@ -38,6 +37,7 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [isBuyingNow, setIsBuyingNow] = useState(false)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
@@ -135,9 +135,48 @@ export default function ProductActions({
     setIsAdding(false)
   }
 
+  // handle buy now - create temporary cart and redirect to checkout
+  const handleBuyNow = async () => {
+    if (!selectedVariant?.id) return null
+
+    setIsBuyingNow(true)
+
+    try {
+      // Create a fresh cart with only this item and redirect to checkout
+      await buyNow({
+        variantId: selectedVariant.id,
+        quantity: 1,
+        countryCode,
+      })
+      // The buyNow function will handle the redirect
+    } catch (error) {
+      setIsBuyingNow(false)
+      console.error("Error during buy now:", error)
+    }
+  }
+
+  // Get button text based on state
+  const getButtonText = () => {
+    if (isAdding) return "Adding..."
+    if (!selectedVariant) return "Select options"
+    if (!inStock) return "Out of stock"
+    return "Add to cart"
+  }
+
+  // Get buy now button text
+  const getBuyNowButtonText = () => {
+    if (isBuyingNow) return "Processing..."
+    return "Buy Now"
+  }
+
+  // Check if buttons should be disabled
+  const isButtonDisabled = !inStock || !selectedVariant || !!disabled || isAdding || isBuyingNow || !isValidVariant
+  const isBuyNowDisabled = !inStock || !selectedVariant || !!disabled || isAdding || isBuyingNow || !isValidVariant
+
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-6" ref={actionsRef}>
+        {/* Options Selection */}
         <div>
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
@@ -150,38 +189,44 @@ export default function ProductActions({
                       updateOption={setOptionValue}
                       title={option.title ?? ""}
                       data-testid="product-options"
-                      disabled={!!disabled || isAdding}
+                      disabled={!!disabled || isAdding || isBuyingNow}
                     />
                   </div>
                 )
               })}
-              <Divider />
             </div>
           )}
         </div>
 
-        <ProductPrice product={product} variant={selectedVariant} />
+        {/* Price */}
+        <div className="py-2">
+          <ProductPrice product={product} variant={selectedVariant} />
+        </div>
 
+        {/* Add to Cart Button */}
         <Button
           onClick={handleAddToCart}
-          disabled={
-            !inStock ||
-            !selectedVariant ||
-            !!disabled ||
-            isAdding ||
-            !isValidVariant
-          }
+          disabled={isButtonDisabled}
           variant="primary"
-          className="w-full h-10"
+          className="w-full h-12 text-base font-medium bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-white"
           isLoading={isAdding}
           data-testid="add-product-button"
         >
-          {!selectedVariant && !options
-            ? "Select variant"
-            : !inStock || !isValidVariant
-            ? "Out of stock"
-            : "Add to cart"}
+          {getButtonText()}
         </Button>
+
+        {/* Buy Now Button */}
+        <Button
+          onClick={handleBuyNow}
+          disabled={isBuyNowDisabled}
+          variant="secondary"
+          className="w-full h-12 text-base font-medium border-2 border-green-600 text-black bg-transparent hover:bg-green-50 active:bg-green-100 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
+          isLoading={isBuyingNow}
+          data-testid="buy-now-button"
+        >
+          {getBuyNowButtonText()}
+        </Button>
+
         <MobileActions
           product={product}
           variant={selectedVariant}
@@ -191,7 +236,7 @@ export default function ProductActions({
           handleAddToCart={handleAddToCart}
           isAdding={isAdding}
           show={!inView}
-          optionsDisabled={!!disabled || isAdding}
+          optionsDisabled={!!disabled || isAdding || isBuyingNow}
         />
       </div>
     </>

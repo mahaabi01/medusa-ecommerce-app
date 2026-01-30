@@ -87,3 +87,23 @@ export const removeCartId = async () => {
     maxAge: -1,
   })
 }
+
+export const getOriginalCartId = async () => {
+  const cookies = await nextCookies()
+  return cookies.get("_medusa_original_cart_id")?.value
+}
+
+export const removeOriginalCartId = async () => {
+  const cookies = await nextCookies()
+  cookies.set("_medusa_original_cart_id", "", {
+    maxAge: -1,
+  })
+}
+
+export const restoreOriginalCart = async () => {
+  const originalCartId = await getOriginalCartId()
+  if (originalCartId) {
+    await setCartId(originalCartId)
+    await removeOriginalCartId()
+  }
+}

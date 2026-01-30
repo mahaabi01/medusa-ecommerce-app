@@ -157,6 +157,87 @@ export async function addToCart({
     .catch(medusaError)
 }
 
+/**
+ * Buy Now - Creates a temporary cart with only the selected item for immediate checkout
+ * Preserves the original cart by storing its ID for later restoration
+ * @param variantId - The variant ID to add to cart
+ * @param quantity - The quantity to add
+ * @param countryCode - The country code for the region
+ */
+export async function buyNow({
+  variantId,
+  quantity,
+  countryCode,
+}: {
+  variantId: string
+  quantity: number
+  countryCode: string
+}) {
+  if (!variantId) {
+    throw new Error("Missing variant ID when buying now")
+  }
+
+  const region = await getRegion(countryCode)
+
+  if (!region) {
+    throw new Error(`Region not found for country code: ${countryCode}`)
+  }
+
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  // Store the original cart ID before creating a new one
+  const originalCartId = await getCartId()
+  
+  if (originalCartId) {
+    const cookies = await import("next/headers").then(m => m.cookies())
+    const cookieStore = await cookies
+    cookieStore.set("_medusa_original_cart_id", originalCartId, {
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+  }
+
+  const locale = await getLocale()
+  
+  // Create a new temporary cart for Buy Now
+  const cartResp = await sdk.store.cart.create(
+    { region_id: region.id, locale: locale || undefined },
+    {},
+    headers
+  )
+  const cart = cartResp.cart
+
+  // Set the new temporary cart ID
+  await setCartId(cart.id)
+
+  // Add only the selected item to the new cart
+  await sdk.store.cart
+    .createLineItem(
+      cart.id,
+      {
+        variant_id: variantId,
+        quantity,
+      },
+      {},
+      headers
+    )
+    .catch(medusaError)
+
+  // Revalidate cart cache
+  const cartCacheTag = await getCacheTag("carts")
+  revalidateTag(cartCacheTag)
+
+  const fulfillmentCacheTag = await getCacheTag("fulfillment")
+  revalidateTag(fulfillmentCacheTag)
+
+  // Redirect to checkout with step=address and buy_now flag
+  redirect(`/${countryCode}/checkout?step=address&buy_now=true`)
+}
+
 export async function updateLineItem({
   lineId,
   quantity,
@@ -418,7 +499,25 @@ export async function placeOrder(cartId?: string) {
     const orderCacheTag = await getCacheTag("orders")
     revalidateTag(orderCacheTag)
 
-    removeCartId()
+    // Check if there's an original cart to restore
+    const cookies = await import("next/headers").then(m => m.cookies())
+    const cookieStore = await cookies
+    const originalCartId = cookieStore.get("_medusa_original_cart_id")?.value
+    
+    if (originalCartId) {
+      // Restore the original cart
+      await setCartId(originalCartId)
+      // Clean up the original cart cookie
+      cookieStore.set("_medusa_original_cart_id", "", { maxAge: -1 })
+      
+      // Revalidate cart cache to show restored cart
+      const cartCacheTag = await getCacheTag("carts")
+      revalidateTag(cartCacheTag)
+    } else {
+      // No original cart, just remove the current cart ID
+      await removeCartId()
+    }
+    
     redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
   }
 

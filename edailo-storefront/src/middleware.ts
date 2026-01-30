@@ -119,6 +119,33 @@ export async function middleware(request: NextRequest) {
   const urlHasCountryCode =
     countryCode && request.nextUrl.pathname.split("/")[1].includes(countryCode)
 
+  // Handle cart restoration for abandoned Buy Now checkout
+  const currentPath = request.nextUrl.pathname
+  const isCheckoutPage = currentPath.includes("/checkout")
+  const originalCartId = request.cookies.get("_medusa_original_cart_id")?.value
+  const currentCartId = request.cookies.get("_medusa_cart_id")?.value
+
+  // If user navigates away from checkout and has an original cart, restore it
+  if (!isCheckoutPage && originalCartId && currentCartId && originalCartId !== currentCartId) {
+    // Create response that will restore the original cart
+    response = urlHasCountryCode 
+      ? NextResponse.next()
+      : NextResponse.redirect(redirectUrl, 307)
+    
+    // Restore original cart
+    response.cookies.set("_medusa_cart_id", originalCartId, {
+      maxAge: 60 * 60 * 24 * 7,
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    })
+    
+    // Remove the original cart cookie
+    response.cookies.delete("_medusa_original_cart_id")
+    
+    return response
+  }
+
   // if one of the country codes is in the url and the cache id is set, return next
   if (urlHasCountryCode && cacheIdCookie) {
     return NextResponse.next()

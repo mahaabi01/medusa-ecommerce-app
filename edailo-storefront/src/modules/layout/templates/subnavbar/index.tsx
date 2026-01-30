@@ -7,7 +7,7 @@ import CategoryDropdown from "@modules/layout/components/category-dropdown";
 
 const navItems = [
   { name: "Deals", path: "/deals" },
-  { name: "Best Sellers", path: "/best-sellers" },
+  // { name: "Best Sellers", path: "/best-sellers" },
   { name: "Latest", path: "/latest" },
   { name: "Customer Service", path: "/customer-service" },
   { name: "Sell on eDAILO", path: "/sell" },

@@ -63,13 +63,7 @@ export default async function Home(props: {
       </div>
 
       {/* Just For You Section */}
-      <ProductList
-        countryCode={countryCode}
-        limit={12}
-          type="just for you"
-          title="Just For You"
-          showAll={true}
-      />
+      <JustForYou countryCode={countryCode} region={region} limit={4} />
 
       {/* Featured Collections */}
       <div className="py-12 bg-ui-bg-subtle">

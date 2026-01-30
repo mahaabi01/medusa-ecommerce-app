@@ -5,7 +5,8 @@ import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
 import RelatedProducts from "@modules/products/components/related-products"
-import ProductInfo from "@modules/products/templates/product-info"
+import ProductName from "@modules/products/templates/product-name"
+import ProductDescription from "@modules/products/templates/product-description"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
 import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
@@ -32,18 +33,29 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   return (
     <>
       <div
-        className="content-container  flex flex-col small:flex-row small:items-start py-6 relative"
+        className="content-container flex flex-col lg:flex-row gap-6 py-6 relative"
         data-testid="product-container"
       >
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
-          <ProductInfo product={product} />
-          <ProductTabs product={product} />
-        </div>
-        <div className="block w-full relative">
+        {/* Image Gallery - 75% width on desktop */}
+        <div className="w-full lg:w-3/4">
           <ImageGallery images={images} />
+          
+          {/* Product Description below image */}
+          <ProductDescription product={product} />
+          
+          {/* Product Tabs below description */}
+          <div className="mt-8">
+            <ProductTabs product={product} />
+          </div>
         </div>
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-12">
+
+        {/* Product Details - 25% width on desktop */}
+        <div className="w-full lg:w-1/4 flex flex-col gap-6">
+          {/* Product Name only */}
+          <ProductName product={product} />
+          
           <ProductOnboardingCta />
+          
           <Suspense
             fallback={
               <ProductActions
@@ -57,6 +69,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           </Suspense>
         </div>
       </div>
+      
       <div
         className="content-container my-16 small:my-32"
         data-testid="related-products-container"
