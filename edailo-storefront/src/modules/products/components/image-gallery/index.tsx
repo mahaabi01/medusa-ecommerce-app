@@ -82,7 +82,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
           <div className="flex-1">
             <Container
               ref={imageRef}
-              className="relative aspect-square w-full overflow-hidden bg-ui-bg-subtle rounded-lg cursor-crosshair"
+              className="relative aspect-square w-full overflow-hidden bg-ui-bg-subtle rounded-lg cursor-crosshair border border-gray-200"
               id={images[selectedImage]?.id}
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
@@ -92,13 +92,10 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
                 <Image
                   src={images[selectedImage].url}
                   priority={true}
-                  className="absolute inset-0"
+                  className="absolute inset-0 object-cover"
                   alt={`Product image ${selectedImage + 1}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 45vw"
-                  style={{
-                    objectFit: "contain",
-                  }}
                 />
               )}
 
