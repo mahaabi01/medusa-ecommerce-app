@@ -22,10 +22,10 @@ export default async function ProductPreview({
   return (
     <LocalizedClientLink 
       href={`/products/${product.handle}`} 
-      className="group block h-full"
+      className="group block"
     >
       <div 
-        className="flex flex-col h-full bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+        className="flex flex-col bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
         data-testid="product-wrapper"
       >
         <Thumbnail
@@ -33,15 +33,16 @@ export default async function ProductPreview({
           images={product.images}
           size="full"
           isFeatured={isFeatured}
+          className="h-32 sm:h-36 lg:h-40"
         />
-        <div className="flex flex-col p-3 flex-1">
+        <div className="flex flex-col p-2">
           <Text 
-            className="text-xs md:text-sm font-medium text-ui-fg-base line-clamp-2 mb-2 min-h-[2.5rem]" 
+            className="text-xs font-medium text-ui-fg-base line-clamp-2 mb-1 min-h-[1.75rem]" 
             data-testid="product-title"
           >
             {product.title}
           </Text>
-          <div className="mt-auto">
+          <div>
             {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
           </div>
         </div>
