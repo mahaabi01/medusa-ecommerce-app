@@ -38,6 +38,7 @@ export default function ProductActions({
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
   const [isBuyingNow, setIsBuyingNow] = useState(false)
+  const [quantity, setQuantity] = useState(1)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
@@ -126,13 +127,17 @@ export default function ProductActions({
 
     setIsAdding(true)
 
-    await addToCart({
-      variantId: selectedVariant.id,
-      quantity: 1,
-      countryCode,
-    })
-
-    setIsAdding(false)
+    try {
+      await addToCart({
+        variantId: selectedVariant.id,
+        quantity: Number(quantity),
+        countryCode,
+      })
+    } catch (error) {
+      console.error("Error adding to cart:", error)
+    } finally {
+      setIsAdding(false)
+    }
   }
 
   // handle buy now - create temporary cart and redirect to checkout
@@ -145,13 +150,42 @@ export default function ProductActions({
       // Create a fresh cart with only this item and redirect to checkout
       await buyNow({
         variantId: selectedVariant.id,
-        quantity: 1,
+        quantity: Number(quantity),
         countryCode,
       })
       // The buyNow function will handle the redirect
     } catch (error) {
       setIsBuyingNow(false)
       console.error("Error during buy now:", error)
+    }
+  }
+
+  // Handle quantity increment
+  const incrementQuantity = () => {
+    const maxQuantity = selectedVariant?.inventory_quantity || 99
+    if (quantity < maxQuantity) {
+      setQuantity(prev => prev + 1)
+    }
+  }
+
+  // Handle quantity decrement
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1)
+    }
+  }
+
+  // Handle manual quantity input
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value)
+    const maxQuantity = selectedVariant?.inventory_quantity || 99
+    
+    if (isNaN(value) || value < 1) {
+      setQuantity(1)
+    } else if (value > maxQuantity) {
+      setQuantity(maxQuantity)
+    } else {
+      setQuantity(value)
     }
   }
 
@@ -175,57 +209,92 @@ export default function ProductActions({
 
   return (
     <>
-      <div className="flex flex-col gap-y-6" ref={actionsRef}>
-        {/* Options Selection */}
-        <div>
-          {(product.variants?.length ?? 0) > 1 && (
-            <div className="flex flex-col gap-y-4">
-              {(product.options || []).map((option) => {
-                return (
-                  <div key={option.id}>
-                    <OptionSelect
-                      option={option}
-                      current={options[option.id]}
-                      updateOption={setOptionValue}
-                      title={option.title ?? ""}
-                      data-testid="product-options"
-                      disabled={!!disabled || isAdding || isBuyingNow}
-                    />
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Price */}
-        <div className="py-2">
+      <div className="flex flex-col gap-y-5" ref={actionsRef}>
+        {/* Price - Show at top */}
+        <div className="border-t border-b border-gray-200 py-3">
           <ProductPrice product={product} variant={selectedVariant} />
         </div>
 
-        {/* Add to Cart Button */}
-        <Button
-          onClick={handleAddToCart}
-          disabled={isButtonDisabled}
-          variant="primary"
-          className="w-full h-12 text-base font-medium bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-white"
-          isLoading={isAdding}
-          data-testid="add-product-button"
-        >
-          {getButtonText()}
-        </Button>
+        {/* Options Selection */}
+        {(product.variants?.length ?? 0) > 1 && (
+          <div className="flex flex-col gap-y-3">
+            {(product.options || []).map((option) => {
+              return (
+                <div key={option.id}>
+                  <OptionSelect
+                    option={option}
+                    current={options[option.id]}
+                    updateOption={setOptionValue}
+                    title={option.title ?? ""}
+                    data-testid="product-options"
+                    disabled={!!disabled || isAdding || isBuyingNow}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        )}
 
-        {/* Buy Now Button */}
-        <Button
-          onClick={handleBuyNow}
-          disabled={isBuyNowDisabled}
-          variant="secondary"
-          className="w-full h-12 text-base font-medium border-2 border-green-600 text-black bg-transparent hover:bg-green-50 active:bg-green-100 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
-          isLoading={isBuyingNow}
-          data-testid="buy-now-button"
-        >
-          {getBuyNowButtonText()}
-        </Button>
+        {/* Quantity Selector */}
+        <div className="flex flex-col gap-y-2">
+          <label className="text-sm font-medium text-ui-fg-base">Quantity</label>
+          <div className="flex items-center">
+            <div className="flex items-center border border-gray-300 rounded-md">
+              <button
+                onClick={decrementQuantity}
+                disabled={quantity <= 1 || !!disabled || isAdding || isBuyingNow}
+                className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Decrease quantity"
+              >
+                <span className="text-xl font-medium">−</span>
+              </button>
+              <input
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                disabled={!!disabled || isAdding || isBuyingNow}
+                className="w-16 h-10 text-center border-x border-gray-300 focus:outline-none text-sm font-medium"
+                min="1"
+                max={selectedVariant?.inventory_quantity || 99}
+              />
+              <button
+                onClick={incrementQuantity}
+                disabled={quantity >= (selectedVariant?.inventory_quantity || 99) || !!disabled || isAdding || isBuyingNow}
+                className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Increase quantity"
+              >
+                <span className="text-xl font-medium">+</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-2.5">
+          {/* Add to Cart Button */}
+          <Button
+            onClick={handleAddToCart}
+            disabled={isButtonDisabled}
+            variant="primary"
+            className="w-full h-11 text-sm font-medium bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-white"
+            isLoading={isAdding}
+            data-testid="add-product-button"
+          >
+            {getButtonText()}
+          </Button>
+
+          {/* Buy Now Button */}
+          <Button
+            onClick={handleBuyNow}
+            disabled={isBuyNowDisabled}
+            variant="secondary"
+            className="w-full h-11 text-sm font-medium border-2 border-green-600 text-black bg-transparent hover:bg-green-50 active:bg-green-100 disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors"
+            isLoading={isBuyingNow}
+            data-testid="buy-now-button"
+          >
+            {getBuyNowButtonText()}
+          </Button>
+        </div>
 
         <MobileActions
           product={product}

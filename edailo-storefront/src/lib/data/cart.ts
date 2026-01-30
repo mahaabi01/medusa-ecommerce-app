@@ -127,34 +127,42 @@ export async function addToCart({
     throw new Error("Missing variant ID when adding to cart")
   }
 
+  console.log("addToCart called with:", { variantId, quantity, countryCode })
+
   const cart = await getOrSetCart(countryCode)
 
   if (!cart) {
     throw new Error("Error retrieving or creating cart")
   }
 
+  console.log("Cart retrieved:", cart.id)
+
   const headers = {
     ...(await getAuthHeaders()),
   }
 
-  await sdk.store.cart
-    .createLineItem(
+  try {
+    await sdk.store.cart.createLineItem(
       cart.id,
       {
         variant_id: variantId,
-        quantity,
+        quantity: Number(quantity),
       },
       {},
       headers
     )
-    .then(async () => {
-      const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag)
 
-      const fulfillmentCacheTag = await getCacheTag("fulfillment")
-      revalidateTag(fulfillmentCacheTag)
-    })
-    .catch(medusaError)
+    const cartCacheTag = await getCacheTag("carts")
+    revalidateTag(cartCacheTag)
+
+    const fulfillmentCacheTag = await getCacheTag("fulfillment")
+    revalidateTag(fulfillmentCacheTag)
+
+    console.log("Item added to cart successfully")
+  } catch (error) {
+    console.error("Error in addToCart:", error)
+    medusaError(error)
+  }
 }
 
 /**

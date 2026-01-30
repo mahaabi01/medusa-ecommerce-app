@@ -5,7 +5,7 @@ import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
 import RelatedProducts from "@modules/products/components/related-products"
-import ProductName from "@modules/products/templates/product-name"
+import ProductInfo from "@modules/products/templates/product-info"
 import ProductDescription from "@modules/products/templates/product-description"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
 import { notFound } from "next/navigation"
@@ -33,43 +33,52 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   return (
     <>
       <div
-        className="content-container flex flex-col lg:flex-row gap-6 py-6 relative"
+        className="content-container py-6 lg:py-12"
         data-testid="product-container"
       >
-        {/* Image Gallery - 75% width on desktop */}
-        <div className="w-full lg:w-3/4">
-          <ImageGallery images={images} />
-          
-          {/* Product Description below image */}
-          <ProductDescription product={product} />
-          
-          {/* Product Tabs below description */}
-          <div className="mt-8">
-            <ProductTabs product={product} />
+        {/* Main Product Section - Two Column Layout with max width and increased gap */}
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+            {/* Left Column - Image Gallery (45% width) */}
+            <div className="w-full lg:w-[45%]">
+              <ImageGallery images={images} />
+              
+              {/* Product Description below image */}
+              <div className="mt-8">
+                <ProductDescription product={product} />
+              </div>
+            </div>
+
+            {/* Right Column - Product Details (55% width with max constraint) */}
+            <div className="w-full lg:w-[55%] flex flex-col gap-4 lg:max-w-md">
+              {/* Product Title and Collection */}
+              <ProductInfo product={product} />
+              
+              <ProductOnboardingCta />
+              
+              {/* Product Actions (Options, Price, Buttons) */}
+              <Suspense
+                fallback={
+                  <ProductActions
+                    disabled={true}
+                    product={product}
+                    region={region}
+                  />
+                }
+              >
+                <ProductActionsWrapper id={product.id} region={region} />
+              </Suspense>
+            </div>
           </div>
         </div>
 
-        {/* Product Details - 25% width on desktop */}
-        <div className="w-full lg:w-1/4 flex flex-col gap-6">
-          {/* Product Name only */}
-          <ProductName product={product} />
-          
-          <ProductOnboardingCta />
-          
-          <Suspense
-            fallback={
-              <ProductActions
-                disabled={true}
-                product={product}
-                region={region}
-              />
-            }
-          >
-            <ProductActionsWrapper id={product.id} region={region} />
-          </Suspense>
+        {/* Product Tabs - Full Width Below */}
+        <div className="mt-12 lg:mt-16 max-w-6xl mx-auto">
+          <ProductTabs product={product} />
         </div>
       </div>
       
+      {/* Related Products */}
       <div
         className="content-container my-16 small:my-32"
         data-testid="related-products-container"
