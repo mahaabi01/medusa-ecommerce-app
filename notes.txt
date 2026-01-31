@@ -1,6 +1,0 @@
-1. medusa-plugin-wishlist/src/index.ts --> Not present in abilash
-2. 
-
-## Medusa plugin wishlist
-1. pnpm install 
-
