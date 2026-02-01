@@ -18,6 +18,13 @@ export const siteConfig = {
     account: { label: "Account", href: "/account" },
     cart: { label: "Cart", href: "/cart" },
   },
+  sublinks : {
+  deals: { label: "Deals", href: "/deals" },
+  latest: { label: "Latest", href: "/latest" },
+  customerService: { label: "Customer Service", href: "/customer-service" },
+  sellOnEdailo: { label: "Sell on eDAILO", href: "/sells-on-edailo" },
+},
+
    sideMenuItems: {
     Home: "/",
     Store: "/store",

@@ -4,14 +4,7 @@ import Link from "next/link";
 import { HttpTypes } from "@medusajs/types";
 import { listCategories } from "@lib/data/categories";
 import CategoryDropdown from "@modules/layout/components/category-dropdown";
-
-const navItems = [
-  { name: "Deals", path: "/deals" },
-  // { name: "Best Sellers", path: "/best-sellers" },
-  { name: "Latest", path: "/latest" },
-  { name: "Customer Service", path: "/customer-service" },
-  { name: "Sell on eDAILO", path: "/sell" },
-] as const;
+import { siteConfig } from "../../../../../config/siteConfig";
 
 export default async function SubNavbar() {
   let categories: HttpTypes.StoreProductCategory[] = [];
@@ -28,15 +21,15 @@ export default async function SubNavbar() {
         {/* Menu icon with categories dropdown */}
         {categories.length > 0 && <CategoryDropdown categories={categories} />}
 
-        {/* Navigation links – responsive: visible on small devices with horizontal scroll */}
+        {/* Sub navigation links from siteConfig.sublinks */}
         <div className="flex items-center space-x-4 md:space-x-8 flex-1 overflow-x-auto">
-          {navItems.map((item) => (
+          {Object.values(siteConfig.sublinks).map((item) => (
             <Link
-              key={item.name}
-              href={item.path}
+              key={item.href}
+              href={item.href}
               className="text-white text-xs md:text-sm font-medium transition hover:text-gray-300 px-2 py-1 whitespace-nowrap"
             >
-              {item.name}
+              {item.label}
             </Link>
           ))}
         </div>
