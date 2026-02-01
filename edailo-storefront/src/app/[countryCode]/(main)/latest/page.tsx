@@ -6,11 +6,11 @@ import { getRegion } from "@lib/data/regions"
 import { siteConfig } from "../../../../../config/siteConfig"
 
 export const metadata: Metadata = {
-  title: "Today's Deals",
+  title: "New Arrivals",
   description: siteConfig.metadata.description,
 }
 
-export default async function DealsPage(props: {
+export default async function LatestPage(props: {
   params: Promise<{ countryCode: string }>
 }) {
   const params = await props.params
@@ -23,7 +23,7 @@ export default async function DealsPage(props: {
   return (
     <>
       <div className="bg-white dark:bg-ui-bg-base">
-        <ProductList countryCode={countryCode} limit={24} type="deals" title={"Today's Best Deals"} showAll={false} />
+        <ProductList countryCode={countryCode} limit={24} type="latest" title={"New Arrivals"} showAll={false} />
       </div>
       <SectionDivider />
     </>
