@@ -19,7 +19,7 @@ export default function CheckoutLayout({
       </div>
       
       {/* Checkout Header with Back to Cart */}
-      <div className="h-16 bg-white border-b">
+      <div className="h-12 bg-white border-b">
         <nav className="flex h-full items-center content-container justify-between">
           <LocalizedClientLink
             href="/cart"

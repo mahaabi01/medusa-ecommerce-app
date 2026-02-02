@@ -42,7 +42,7 @@ const Addresses = ({
 
   return (
     <div className="bg-white">
-      <div className="flex flex-row items-center justify-between mb-6">
+      <div className="flex flex-row items-center justify-between mb-2">
         <Heading
           level="h2"
           className="flex flex-row text-3xl-regular gap-x-2 items-baseline"
@@ -64,7 +64,7 @@ const Addresses = ({
       </div>
       {isOpen ? (
         <form action={formAction}>
-          <div className="pb-8">
+          <div className="pb-2">
             <ShippingAddress
               customer={customer}
               checked={sameAsBilling}
@@ -76,7 +76,7 @@ const Addresses = ({
               <div>
                 <Heading
                   level="h2"
-                  className="text-3xl-regular gap-x-4 pb-6 pt-8"
+                  className="text-3xl-regular gap-x-6 pb-2 pt-2"
                 >{siteConfig.chechout.billingaddress}
                   
                 </Heading>
@@ -84,7 +84,7 @@ const Addresses = ({
                 <BillingAddress cart={cart} />
               </div>
             )}
-            <SubmitButton className="mt-6 bg-green-800 hover:bg-green-700  " data-testid="submit-address-button">
+            <SubmitButton className="mt-3 bg-green-800 hover:bg-green-700  " data-testid="submit-address-button">
               {siteConfig.chechout.continuedelivery}
             </SubmitButton>
             <ErrorMessage error={message} data-testid="address-error-message" />
@@ -94,7 +94,7 @@ const Addresses = ({
         <div>
           <div className="text-small-regular">
             {cart && cart.shipping_address ? (
-              <div className="flex items-start gap-x-8">
+              <div className="flex items-start gap-x-2">
                 <div className="flex items-start gap-x-1 w-full">
                   <div
                     className="flex flex-col w-1/3"

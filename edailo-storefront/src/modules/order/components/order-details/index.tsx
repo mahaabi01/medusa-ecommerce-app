@@ -26,7 +26,7 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
         </span>
         .
       </Text>
-      <Text className="mt-2">
+      <Text className="mt-1">
         {siteConfig.order.date}{" "}
         <span data-testid="order-date">
           {new Date(order.created_at).toDateString()}

@@ -71,6 +71,8 @@ const Payment = ({
     })
   }
 
+  
+
   const handleSubmit = async () => {
     setIsLoading(true)
     try {
@@ -186,7 +188,7 @@ const Payment = ({
 
           <Button
             size="large"
-            className="mt-6"
+            className=" bg-green-900 hover:bg-green-700"
             onClick={handleSubmit}
             isLoading={isLoading}
             disabled={
@@ -197,7 +199,7 @@ const Payment = ({
           >
             {!activeSession && isStripeLike(selectedPaymentMethod)
               ? " Enter card details"
-              : "Continue to review"}
+              : "Proceed"}
           </Button>
         </div>
 
