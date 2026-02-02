@@ -22,7 +22,7 @@ export default async function SubNavbar() {
         {categories.length > 0 && <CategoryDropdown categories={categories} />}
 
         {/* Sub navigation links from siteConfig.sublinks */}
-        <div className="flex items-center space-x-4 md:space-x-8 flex-1 overflow-x-auto">
+        <div className="flex items-center space-x-4 md:space-x-8 flex-1 ">
           {Object.values(siteConfig.sublinks).map((item) => (
             <Link
               key={item.href}

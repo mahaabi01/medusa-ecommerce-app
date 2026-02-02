@@ -38,45 +38,64 @@ export default function CategoryTemplate({
 
   return (
     <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
+      className="flex flex-col small:flex-row small:items-start py-3 content-container gap-6"
       data-testid="category-container"
     >
-      <RefinementList sortBy={sort} data-testid="sort-by-container" />
-      <div className="w-full">
-        <div className="flex flex-row mb-8 text-2xl-semi gap-4">
-          {parents &&
-            parents.map((parent) => (
-              <span key={parent.id} className="text-ui-fg-subtle">
-                <LocalizedClientLink
-                  className="mr-4 hover:text-black"
-                  href={`/categories/${parent.handle}`}
-                  data-testid="sort-by-link"
-                >
-                  {parent.name}
-                </LocalizedClientLink>
-                /
-              </span>
-            ))}
-          <h1 data-testid="category-page-title">{category.name}</h1>
-        </div>
-        {category.description && (
-          <div className="mb-8 text-base-regular">
-            <p>{category.description}</p>
-          </div>
-        )}
-        {category.category_children && (
-          <div className="mb-8 text-base-large">
-            <ul className="grid grid-cols-1 gap-2">
-              {category.category_children?.map((c) => (
-                <li key={c.id}>
-                  <InteractiveLink href={`/categories/${c.handle}`}>
-                    {c.name}
-                  </InteractiveLink>
-                </li>
+      {/* Left Sidebar - Sort Filter */}
+      <div className="w-full small:w-56 flex-shrink-0">
+        <RefinementList sortBy={sort} data-testid="sort-by-container" />
+      </div>
+
+      {/* Main Content */}
+      <div className="w-full flex-1">
+        {/* Breadcrumb and Title */}
+        <div className="mb-3">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 mb-2">
+            {parents &&
+              parents.reverse().map((parent) => (
+                <span key={parent.id} className="flex items-center gap-2">
+                  <LocalizedClientLink
+                    className="hover:text-black transition-colors"
+                    href={`/categories/${parent.handle}`}
+                    data-testid="sort-by-link"
+                  >
+                    {parent.name}
+                  </LocalizedClientLink>
+                  <span>/</span>
+                </span>
               ))}
-            </ul>
           </div>
-        )}
+          <h1 className="text-lg font-bold" data-testid="category-page-title">
+            {category.name}
+          </h1>
+          {category.description && (
+            <p className="text-xs text-gray-600 mt-1">{category.description}</p>
+          )}
+        </div>
+
+        {/* Child Categories */}
+        {category.category_children &&
+          category.category_children.length > 0 && (
+            <div className="mb-6 bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <h3 className="text-sm font-semibold mb-3 text-gray-900">
+                Subcategories
+              </h3>
+              <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                {category.category_children?.map((c) => (
+                  <li key={c.id}>
+                    <InteractiveLink
+                      href={`/categories/${c.handle}`}
+                      className="text-sm"
+                    >
+                      {c.name}
+                    </InteractiveLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+        {/* Products Grid */}
         <Suspense
           fallback={
             <SkeletonProductGrid
