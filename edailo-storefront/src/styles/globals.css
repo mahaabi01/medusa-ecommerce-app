@@ -114,8 +114,8 @@
 
 @layer base {
   :root {
-    --navbar: 249 62.3%, 10.4%;
-    --footer: 237 100% 8.4%;
+    --navbar: 242 77%, 9%;
+    --footer: 242 77%, 9%;
     --foreground: 0 0% 0%;
     --white-foreground: 0 0% 100%;
      --primary: 196 98% 43%;
@@ -124,8 +124,8 @@
     --card-bg :0  0%, 87%;
   }
   .dark {
-    --navbar: 0  100%, 3%;
-    --footer: 222 47% 11%;
+    --navbar:242 77%, 9%;
+    --footer: 242 77%, 9%;
    --foreground: 0 0% 100%; 
    --footer-foreground: 0 0% 100%;
     --primary: 196 98% 50%;

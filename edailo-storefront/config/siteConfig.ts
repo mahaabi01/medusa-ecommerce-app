@@ -13,8 +13,6 @@ export const siteConfig = {
     alt: "Edailo Store",
   },
   navLinks: {
-    home: { label: "Home", href: "/" },
-    store: { label: "Store", href: "/store" },
     account: { label: "Account", href: "/account" },
     cart: { label: "Cart", href: "/cart" },
   },
@@ -107,6 +105,8 @@ export const siteConfig = {
    help:"You can find frequently asked questions and answers on our customer service page."
   },
   product:{
+    search:"Search Results for",
+    matching:"Showing products matching your search",
     allProduct:"All products",
     cretedSucess:"Your  product was successfully created! 🎉",
     original:"Original:",
@@ -127,12 +127,23 @@ export const siteConfig = {
     mightCheck:"You might also want to check out these products.",
 
     },
+    page:{
+      notfound:"Page not found",
+      frontpage:"Go to frontpage",
+      doesNotExit:" The page you tried to access does not exist.",
+    },
+    login:{
+        title: "Sign in",
+  description: "Sign in to your Medusa Store account.",
+    },
     shipping:{
+      update:" View and update your shipping addresses, you can add as many as you like. Saving your addresses will make them available during checkout.",
       free:"Free Shipping unlocked!",
       viewchart:"View cart",
       viewProduct:"View products",
     } ,
      cart:{
+      notfound:" The cart you tried to access does not exist. Clear your cookies and try again.",
     shipping:"Shipping",
     discount:"Discount",
     taxes:"Taxes",
@@ -180,6 +191,7 @@ export const siteConfig = {
     termsAndCondition:"By clicking the Place Order button, you confirm that you have read, understand and accept our Terms of Use, Terms of Sale and Returns Policy and acknowledge that you have read edailo Store's Privacy Policy."
   },
   order:{
+    viewOrder:" View your previous orders and their status. You can also create returns or exchanges for your orders if needed.",
     thankYou:"Thank you!",
     orderSucess:"Your order was placed successfully.",
     orderSummary:"Order Summary",

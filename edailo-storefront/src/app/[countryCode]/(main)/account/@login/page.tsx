@@ -1,10 +1,11 @@
 import { Metadata } from "next"
 
 import LoginTemplate from "@modules/account/templates/login-template"
+import { siteConfig } from "../../../../../../config/siteConfig"
 
 export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Sign in to your Medusa Store account.",
+  title: siteConfig.login.title ,
+  description: siteConfig.login.description,
 }
 
 export default function Login() {

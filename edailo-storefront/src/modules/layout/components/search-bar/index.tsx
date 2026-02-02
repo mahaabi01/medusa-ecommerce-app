@@ -98,7 +98,7 @@ export default function SearchBar() {
         />
         <button
           onClick={handleSearch}
-          className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#EC1158] opacity-60 hover:bg-[#EC1158]text-white rounded-full transition-colors"
           aria-label="Search"
         >
           <Search size={16} color="white" />
@@ -153,7 +153,7 @@ export default function SearchBar() {
                           </p>
                         )}
                         {product.variants && product.variants.length > 0 && (
-                          <p className="text-sm font-semibold text-blue-600 mt-1">
+                          <p className="text-sm font-semibold text-[#EC1158] mt-1">
                             {product.variants[0].calculated_price?.calculated_amount
                               ? new Intl.NumberFormat('da-DK', {
                                   style: 'currency',
@@ -171,7 +171,7 @@ export default function SearchBar() {
                 <div className="p-3 border-t border-gray-100 bg-gray-50">
                   <button
                     onClick={handleSearch}
-                    className="w-full text-center text-sm text-blue-600 hover:text-blue-700 font-medium"
+                    className="w-full text-center text-sm text-[#EC1158]  font-medium"
                   >
                     View all results →
                   </button>

@@ -32,7 +32,7 @@ export default async function ProductCard({
         <div className="relative overflow-hidden bg-ui-bg-subtle aspect-square">
           {imageUrl ? (
             <Image
-              src={imageUrl}
+              src={imageUrl} 
               alt={product.title || "Product image"}
               className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
               fill

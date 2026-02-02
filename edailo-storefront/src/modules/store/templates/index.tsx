@@ -49,10 +49,10 @@ const StoreTemplate = async ({
           {searchQuery ? (
             <div>
               <h1 className="text-lg font-bold" data-testid="store-page-title">
-                Search Results for "{searchQuery}"
+             {siteConfig.product.search} "{searchQuery}"
               </h1>
               <p className="text-xs text-ui-fg-subtle mt-0.5">
-                Showing products matching your search
+                {siteConfig.product.matching}
               </p>
             </div>
           ) : (

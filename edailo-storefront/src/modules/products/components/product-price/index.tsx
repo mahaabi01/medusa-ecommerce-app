@@ -40,7 +40,7 @@ export default function ProductPrice({
       {selectedPrice.price_type === "sale" && (
         <>
           <p>
-            <span className="text-ui-fg-subtle">{siteConfig.product.original}</span>
+            <span className="text-primary">{siteConfig.product.original}</span>
             <span
               className="line-through"
               data-testid="original-product-price"

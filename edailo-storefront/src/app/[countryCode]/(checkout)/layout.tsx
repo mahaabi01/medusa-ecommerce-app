@@ -1,6 +1,6 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ChevronDown from "@modules/common/icons/chevron-down"
-import MedusaCTA from "@modules/layout/components/medusa-cta"
+
 import Nav from "@modules/layout/templates/nav"
 import SubNavbar from "@modules/layout/templates/subnavbar"
 import { siteConfig } from "../../../../config/siteConfig"
@@ -41,7 +41,7 @@ export default function CheckoutLayout({
       <div className="relative" data-testid="checkout-container">{children}</div>
       
       <div className="py-4 w-full flex items-center justify-center">
-        <MedusaCTA />
+      
       </div>
     </div>
   )

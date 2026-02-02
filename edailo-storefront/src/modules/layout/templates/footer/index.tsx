@@ -6,7 +6,7 @@ export default function Footer() {
   const footer = siteConfig?.footer
 
   return (
-    <footer className="bg-black w-full">
+    <footer className="bg-footer w-full">
       <div className="content-container py-16 text-white">
 
         {/* Top section */}
