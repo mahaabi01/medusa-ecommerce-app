@@ -10,6 +10,7 @@ import { CardElement } from "@stripe/react-stripe-js"
 import { StripeCardElementOptions } from "@stripe/stripe-js"
 import PaymentTest from "../payment-test"
 import { StripeContext } from "../payment-wrapper/stripe-wrapper"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 type PaymentContainerProps = {
   paymentProviderId: string
@@ -47,17 +48,22 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
           <Text className="text-base-regular">
             {paymentInfoMap[paymentProviderId]?.title || paymentProviderId}
           </Text>
-          {isManual(paymentProviderId) && isDevelopment && (
+          {/* {isManual(paymentProviderId) && isDevelopment && (
             <PaymentTest className="hidden small:block" />
-          )}
+          )} */}
+          {isManual(paymentProviderId)
+          }
         </div>
         <span className="justify-self-end text-ui-fg-base">
           {paymentInfoMap[paymentProviderId]?.icon}
         </span>
       </div>
-      {isManual(paymentProviderId) && isDevelopment && (
+      {/* {isManual(paymentProviderId) && isDevelopment && (
         <PaymentTest className="small:hidden text-[10px]" />
-      )}
+      )} */}
+      {isManual(paymentProviderId)
+        // <PaymentTest className="small:hidden text-[10px]" />
+      }
       {children}
     </RadioGroupOption>
   )
@@ -104,11 +110,11 @@ export const StripeCardContainer = ({
       paymentInfoMap={paymentInfoMap}
       disabled={disabled}
     >
-      {selectedPaymentOptionId === paymentProviderId &&
+      {/* {selectedPaymentOptionId === paymentProviderId &&
         (stripeReady ? (
           <div className="my-4 transition-all duration-150 ease-in-out">
             <Text className="txt-medium-plus text-ui-fg-base mb-1">
-              Enter your card details:
+              {siteConfig.chechout.carddetail}
             </Text>
             <CardElement
               options={useOptions as StripeCardElementOptions}
@@ -125,5 +131,10 @@ export const StripeCardContainer = ({
           <SkeletonCardDetails />
         ))}
     </PaymentContainer>
+  )
+} */}
+
+
+</PaymentContainer>
   )
 }

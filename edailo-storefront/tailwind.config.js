@@ -34,6 +34,16 @@ module.exports = {
           80: "#1F2937",
           90: "#111827",
         },
+        navbar: "hsl(var(--navbar))",
+        footer: "hsl(var(--footer))",
+        text: "hsl(var(--foreground))",
+        "white-text": "hsl(var(--white-foreground))",
+
+        primary: "hsl(var(--primary))",
+        "primary-text": "hsl(var(--primary-foreground))",
+
+        success: "hsl(var(--success))",
+        card: "hsl(var(--card-bg))",
       },
       borderRadius: {
         none: "0px",

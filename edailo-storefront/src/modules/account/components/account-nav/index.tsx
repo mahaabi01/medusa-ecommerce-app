@@ -11,6 +11,7 @@ import Package from "@modules/common/icons/package"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { HttpTypes } from "@medusajs/types"
 import { signout } from "@lib/data/customer"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 const AccountNav = ({
   customer,
@@ -35,7 +36,7 @@ const AccountNav = ({
           >
             <>
               <ChevronDown className="transform rotate-90" />
-              <span>Account</span>
+              <span>{siteConfig.accountPage.account}</span>
             </>
           </LocalizedClientLink>
         ) : (
@@ -54,7 +55,7 @@ const AccountNav = ({
                     <>
                       <div className="flex items-center gap-x-2">
                         <User size={20} />
-                        <span>Profile</span>
+                        <span>{siteConfig.accountPage.profileLabel}</span>
                       </div>
                       <ChevronDown className="transform -rotate-90" />
                     </>
@@ -69,7 +70,7 @@ const AccountNav = ({
                     <>
                       <div className="flex items-center gap-x-2">
                         <MapPin size={20} />
-                        <span>Addresses</span>
+                        <span>{siteConfig.accountPage.addressesLabel}</span>
                       </div>
                       <ChevronDown className="transform -rotate-90" />
                     </>
@@ -83,7 +84,7 @@ const AccountNav = ({
                   >
                     <div className="flex items-center gap-x-2">
                       <Package size={20} />
-                      <span>Orders</span>
+                      <span>{siteConfig.accountPage.ordersLabel}</span>
                     </div>
                     <ChevronDown className="transform -rotate-90" />
                   </LocalizedClientLink>
@@ -97,7 +98,7 @@ const AccountNav = ({
                   >
                     <div className="flex items-center gap-x-2">
                       <ArrowRightOnRectangle />
-                      <span>Log out</span>
+                      <span>{siteConfig.buttons.logout}</span>
                     </div>
                     <ChevronDown className="transform -rotate-90" />
                   </button>
@@ -120,7 +121,7 @@ const AccountNav = ({
                   route={route!}
                   data-testid="overview-link"
                 >
-                  Overview
+                  {siteConfig.accountPage.overviewLabel}
                 </AccountNavLink>
               </li>
               <li>
@@ -129,7 +130,7 @@ const AccountNav = ({
                   route={route!}
                   data-testid="profile-link"
                 >
-                  Profile
+                  {siteConfig.accountPage.profileLabel}
                 </AccountNavLink>
               </li>
               <li>
@@ -138,7 +139,7 @@ const AccountNav = ({
                   route={route!}
                   data-testid="addresses-link"
                 >
-                  Addresses
+                 {siteConfig.accountPage.addressesLabel}
                 </AccountNavLink>
               </li>
               <li>
@@ -147,7 +148,7 @@ const AccountNav = ({
                   route={route!}
                   data-testid="orders-link"
                 >
-                  Orders
+                  {siteConfig.accountPage.ordersLabel}
                 </AccountNavLink>
               </li>
               <li className="text-grey-700">
@@ -156,7 +157,7 @@ const AccountNav = ({
                   onClick={handleLogout}
                   data-testid="logout-button"
                 >
-                  Log out
+                  {siteConfig.buttons.logout}
                 </button>
               </li>
             </ul>

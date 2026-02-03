@@ -6,6 +6,7 @@ import ProductOnboardingCta from "@modules/products/components/product-onboardin
 import ProductTabs from "@modules/products/components/product-tabs"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
+import ProductDescription from "@modules/products/templates/product-description"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
 import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
@@ -33,37 +34,57 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   return (
     <>
       <div
-        className="content-container  flex flex-col small:flex-row small:items-start py-6 relative"
+        className="content-container py-6 lg:py-12"
         data-testid="product-container"
       >
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
-          <ProductInfo product={product} />
+        {/* Main Product Section - Two Column Layout with max width and increased gap */}
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+            {/* Left Column - Image Gallery (45% width) */}
+            <div className="w-full lg:w-[45%]">
+              <ImageGallery images={images} />
+
+              {/* Product Description below image */}
+              <div className="mt-8">
+                <ProductDescription product={product} />
+              </div>
+            </div>
+
+            {/* Right Column - Product Details (55% width with max constraint) */}
+            <div className="w-full lg:w-[55%] flex flex-col gap-4 lg:max-w-md">
+              {/* Product Title and Collection */}
+              <ProductInfo product={product} />
+
+              <ProductOnboardingCta />
+
+              {/* Product Actions (Options, Price, Buttons) */}
+              <Suspense
+                fallback={
+                  <ProductActions
+                    disabled={true}
+                    product={product}
+                    region={region}
+                  />
+                }
+              >
+                <ProductActionsWrapper id={product.id} region={region} />
+              </Suspense>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Tabs - Full Width Below */}
+        <div className="mt-12 lg:mt-16 max-w-6xl mx-auto">
           <ProductTabs product={product} />
-        </div>
-        <div className="block w-full relative">
-          <ImageGallery images={images} />
-        </div>
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-12">
-          <ProductOnboardingCta />
-          <Suspense
-            fallback={
-              <ProductActions
-                disabled={true}
-                product={product}
-                region={region}
-              />
-            }
-          >
-            <ProductActionsWrapper id={product.id} region={region} />
-          </Suspense>
         </div>
       </div>
       <div className="content-container my-16 small:my-32">
         <ProductReviews productId={product.id} />
       </div>
 
+      {/* Related Products */}
       <div
-        className="content-container my-16 small:my-32"
+        className="content-container my-8"
         data-testid="related-products-container"
       >
         <Suspense fallback={<SkeletonRelatedProducts />}>

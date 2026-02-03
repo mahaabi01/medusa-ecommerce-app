@@ -16,6 +16,8 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import Thumbnail from "@modules/products/components/thumbnail"
 import { usePathname } from "next/navigation"
 import { Fragment, useEffect, useRef, useState } from "react"
+import { siteConfig } from "../../../../../config/siteConfig"
+import CartIcon from "@modules/common/icons/cart"
 
 const CartDropdown = ({
   cart: cartState,
@@ -82,10 +84,21 @@ const CartDropdown = ({
       <Popover className="relative h-full">
         <PopoverButton className="h-full">
           <LocalizedClientLink
-            className="hover:text-ui-fg-base"
+            className="text-white-text hover:text-ui-fg-base flex items-center"
             href="/cart"
             data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+            aria-label={`Cart with ${totalItems} items`}
+          >
+            <div className="relative">
+              <CartIcon className="w-9 h-9 text-white-text" />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-1 inline-flex items-center justify-center min-w-[20px] h-5 px-1 text-[12px] font-semibold text-white bg-red-500 rounded-full">
+                  {totalItems}
+                </span>
+              )}
+            </div>
+            <span className="sr-only">Cart, {totalItems} items</span>
+          </LocalizedClientLink>
         </PopoverButton>
         <Transition
           show={cartDropdownOpen}
@@ -151,7 +164,8 @@ const CartDropdown = ({
                                   data-testid="cart-item-quantity"
                                   data-value={item.quantity}
                                 >
-                                  Quantity: {item.quantity}
+                                 {siteConfig.cart.quantity
+                                 }{item.quantity}
                                 </span>
                               </div>
                               <div className="flex justify-end">
@@ -168,7 +182,7 @@ const CartDropdown = ({
                             className="mt-1"
                             data-testid="cart-item-remove-button"
                           >
-                            Remove
+                            {siteConfig.buttons.remove}
                           </DeleteButton>
                         </div>
                       </div>
@@ -177,8 +191,8 @@ const CartDropdown = ({
                 <div className="p-4 flex flex-col gap-y-4 text-small-regular">
                   <div className="flex items-center justify-between">
                     <span className="text-ui-fg-base font-semibold">
-                      Subtotal{" "}
-                      <span className="font-normal">(excl. taxes)</span>
+                     {siteConfig.home.cart.subTotal} {" "}
+                      <span className="font-normal"> {siteConfig.home.cart.exctax}</span>
                     </span>
                     <span
                       className="text-large-semi"
@@ -193,11 +207,11 @@ const CartDropdown = ({
                   </div>
                   <LocalizedClientLink href="/cart" passHref>
                     <Button
-                      className="w-full"
+                      className="w-full bg-green-900 hover:bg-green-700"
                       size="large"
                       data-testid="go-to-cart-button"
                     >
-                      Go to cart
+                      {siteConfig.home.cart.gotocart}
                     </Button>
                   </LocalizedClientLink>
                 </div>
@@ -206,14 +220,14 @@ const CartDropdown = ({
               <div>
                 <div className="flex py-16 flex-col gap-y-4 items-center justify-center">
                   <div className="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">
-                    <span>0</span>
+                    <span>{siteConfig.home.cart.zero}</span>
                   </div>
-                  <span>Your shopping bag is empty.</span>
+                  <span>{siteConfig.home.cart.empty}</span>
                   <div>
                     <LocalizedClientLink href="/store">
                       <>
-                        <span className="sr-only">Go to all products page</span>
-                        <Button onClick={close}>Explore products</Button>
+                        <span className="sr-only">{siteConfig.home.cart.allproduct}</span>
+                        <Button onClick={close}>{siteConfig.home.cart.exploreproducts}</Button>
                       </>
                     </LocalizedClientLink>
                   </div>

@@ -4,6 +4,7 @@ import UnderlineLink from "@modules/common/components/interactive-link"
 
 import AccountNav from "../components/account-nav"
 import { HttpTypes } from "@medusajs/types"
+import { siteConfig } from "../../../../config/siteConfig"
 
 interface AccountLayoutProps {
   customer: HttpTypes.StoreCustomer | null
@@ -25,13 +26,12 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({
           <div>
             <h3 className="text-xl-semi mb-4">Got questions?</h3>
             <span className="txt-medium">
-              You can find frequently asked questions and answers on our
-              customer service page.
+              {siteConfig.customer.service}
             </span>
           </div>
           <div>
             <UnderlineLink href="/customer-service">
-              Customer Service
+              {siteConfig.customer.help}
             </UnderlineLink>
           </div>
         </div>

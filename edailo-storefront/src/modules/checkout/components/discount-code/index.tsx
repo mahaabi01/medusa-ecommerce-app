@@ -9,6 +9,7 @@ import { HttpTypes } from "@medusajs/types"
 import Trash from "@modules/common/icons/trash"
 import ErrorMessage from "../error-message"
 import { SubmitButton } from "../submit-button"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 type DiscountCodeProps = {
   cart: HttpTypes.StoreCart & {
@@ -66,7 +67,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
               className="txt-medium text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
               data-testid="add-discount-button"
             >
-              Add Promotion Code(s)
+             {siteConfig.chechout.promocode}
             </button>
 
             {/* <Tooltip content="You can add multiple promotion codes">
@@ -89,7 +90,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                   variant="secondary"
                   data-testid="discount-apply-button"
                 >
-                  Apply
+                 {siteConfig.chechout.apply}
                 </SubmitButton>
               </div>
 
@@ -105,7 +106,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
           <div className="w-full flex items-center">
             <div className="flex flex-col w-full">
               <Heading className="txt-medium mb-2">
-                Promotion(s) applied:
+               {siteConfig.chechout.promoapply}
               </Heading>
 
               {promotions.map((promotion) => {
@@ -161,7 +162,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                       >
                         <Trash size={14} />
                         <span className="sr-only">
-                          Remove discount code from order
+                          {siteConfig.chechout.removediscountcode}
                         </span>
                       </button>
                     )}

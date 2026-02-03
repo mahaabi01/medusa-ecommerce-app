@@ -4,6 +4,7 @@ import { useEffect } from "react"
 
 import useToggleState from "@lib/hooks/use-toggle-state"
 import { useFormStatus } from "react-dom"
+import { siteConfig } from "../../../../../config/siteConfig"
 
 type AccountInfoProps = {
   label: string
@@ -63,7 +64,7 @@ const AccountInfo = ({
             data-testid="edit-button"
             data-active={state}
           >
-            {state ? "Cancel" : "Edit"}
+            {state ?  siteConfig.buttons.cancel : siteConfig.buttons.edit}
           </Button>
         </div>
       </div>
@@ -82,7 +83,7 @@ const AccountInfo = ({
           data-testid="success-message"
         >
           <Badge className="p-2 my-4" color="green">
-            <span>{label} updated succesfully</span>
+            <span>{label} {siteConfig.messages.accountInfo.success}</span>
           </Badge>
         </Disclosure.Panel>
       </Disclosure>
@@ -126,7 +127,7 @@ const AccountInfo = ({
                 type="submit"
                 data-testid="save-button"
               >
-                Save changes
+               {siteConfig.buttons.save}
               </Button>
             </div>
           </div>
