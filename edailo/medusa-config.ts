@@ -21,17 +21,17 @@ module.exports = defineConfig({
           {
             resolve: "./src/modules/esewa-payment",
             id: "esewa",
-          options: {
-            merchantId: process.env.ESEWA_MERCHANT_ID,
-            secretKey: process.env.ESEWA_SECRET_KEY,
-            environment: process.env.ESEWA_ENVIRONMENT || "test",
+            options: {
+              merchantId: process.env.ESEWA_MERCHANT_ID,
+              secretKey: process.env.ESEWA_SECRET_KEY,
+              environment: process.env.ESEWA_ENVIRONMENT || "test",
+            },
           },
-        },
-      ],
+        ],
+      },
     },
-  },
-  {
-    resolve: "@medusajs/medusa/notification",
+    {
+      resolve: "@medusajs/medusa/notification",
       options: {
         providers: [
           {
@@ -45,6 +45,9 @@ module.exports = defineConfig({
           },
         ],
       },
+    },
+    {
+      resolve: "./src/modules/product-review",
     },
   ],
 });

@@ -11,6 +11,7 @@ import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 
 import ProductActionsWrapper from "./product-actions-wrapper"
+import ProductReviews from "../components/product-reviews"
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct
@@ -57,6 +58,10 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           </Suspense>
         </div>
       </div>
+      <div className="content-container my-16 small:my-32">
+        <ProductReviews productId={product.id} />
+      </div>
+
       <div
         className="content-container my-16 small:my-32"
         data-testid="related-products-container"
