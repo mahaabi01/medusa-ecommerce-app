@@ -10,12 +10,12 @@ const Help = () => {
       <div className="text-base-regular my-2">
         <ul className="gap-y-2 flex flex-col">
           <li>
-            <LocalizedClientLink href="/contact">{siteConfig.order.contact}</LocalizedClientLink>
+            <LocalizedClientLink href="/customer-service">{siteConfig.order.contact}</LocalizedClientLink>
           </li>
           <li>
-            <LocalizedClientLink href="/contact">
+            {/* <LocalizedClientLink href="/contact">
               {siteConfig.order.return}
-            </LocalizedClientLink>
+            </LocalizedClientLink> */}
           </li>
         </ul>
       </div>

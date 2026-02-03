@@ -48,7 +48,7 @@ export default async function ProductCard({
         {/* Product Info */}
         <div className="flex flex-col p-3 flex-1">
           <Text 
-            className="text-xs md:text-sm font-medium text-ui-fg-base line-clamp-2 mb-2 min-h-[2.5rem]" 
+            className="text-xs md:text-sm font-normal text-ui-fg-base line-clamp-2 mb-2 min-h-[2.5rem]" 
             data-testid="product-title"
           >
             {product.title}

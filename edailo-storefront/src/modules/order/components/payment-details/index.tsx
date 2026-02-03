@@ -15,7 +15,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
 
   return (
     <div>
-      <Heading level="h2" className="flex flex-row text-3xl-regular my-6">
+      <Heading level="h2" className="flex flex-row text-base font-medium mb-3">
        {siteConfig.chechout.payment}
       </Heading>
       <div>
@@ -56,7 +56,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
         )}
       </div>
 
-      <Divider className="mt-8" />
+      <Divider className="mt-4" />
     </div>
   )
 }

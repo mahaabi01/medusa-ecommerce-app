@@ -43,6 +43,7 @@ module.exports = {
         "primary-text": "hsl(var(--primary-foreground))",
 
         success: "hsl(var(--success))",
+        "success-primary": "hsl(var(--success-primary))",
         card: "hsl(var(--card-bg))",
       },
       borderRadius: {

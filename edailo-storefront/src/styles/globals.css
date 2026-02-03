@@ -121,6 +121,7 @@
     --primary-foreground: 0 0% 100%;
     --success: 160 84% 39%;
     --card-bg: 0 0%, 87%;
+    --success-primary: 124.48, 55.37%, 23.73%
   }
   .dark {
     --navbar: 242 77%, 9%;
@@ -131,5 +132,6 @@
     --primary-foreground: 0 0% 100%;
     --success: 160 70% 45%;
     --card-bg: 0 0%, 87%;
+    --success-primary: 124.48, 55.37%, 23.73%
   }
 }

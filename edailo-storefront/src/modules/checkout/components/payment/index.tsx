@@ -121,7 +121,7 @@ const Payment = ({
 
   return (
     <div className="bg-white">
-      <div className="flex flex-row items-center justify-between mb-6">
+      <div className="flex flex-row items-center justify-between mb-2">
         <Heading
           level="h2"
           className={clx(
@@ -200,7 +200,7 @@ const Payment = ({
 
           <Button
             size="large"
-            className=" bg-green-900 hover:bg-green-700"
+            className="bg-green-900 hover:bg-green-700 ml-auto block"
             onClick={handleSubmit}
             isLoading={isLoading}
             disabled={

@@ -12,7 +12,7 @@ type ShippingDetailsProps = {
 const ShippingDetails = ({ order }: ShippingDetailsProps) => {
   return (
     <div>
-      <Heading level="h2" className="flex flex-row text-2xl-regular my-6">
+      <Heading level="h2" className="flex flex-row text-base font-medium mb-3">
         {siteConfig.chechout.delivery}
       </Heading>
       <div className="flex items-start ">
@@ -66,7 +66,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
           </Text>
         </div>
       </div>
-      <Divider className="mt-8" />
+      <Divider className="mt-4" />
     </div>
   )
 }

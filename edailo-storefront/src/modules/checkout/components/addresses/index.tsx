@@ -76,7 +76,7 @@ const Addresses = ({
               <div>
                 <Heading
                   level="h2"
-                  className="text-3xl-regular gap-x-6 pb-2 pt-2"
+                  className="text-xl-regular gap-x-6 pb-2 pt-2"
                 >{siteConfig.chechout.billingaddress}
                   
                 </Heading>
@@ -84,10 +84,10 @@ const Addresses = ({
                 <BillingAddress cart={cart} />
               </div>
             )}
-            <SubmitButton className="mt-3 bg-green-800 hover:bg-green-700  " data-testid="submit-address-button">
+            <SubmitButton className="mt-3 bg-green-800 hover:bg-green-700 ml-auto block" data-testid="submit-address-button">
               {siteConfig.chechout.continuedelivery}
             </SubmitButton>
-            <ErrorMessage error={message} data-testid="address-error-message" />
+            {/* <ErrorMessage error={message} data-testid="address-error-message" /> */}
           </div>
         </form>
       ) : (

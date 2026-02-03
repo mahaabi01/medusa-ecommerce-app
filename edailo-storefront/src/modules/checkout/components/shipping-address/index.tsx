@@ -94,6 +94,8 @@ const ShippingAddress = ({
 
   return (
     <>
+      {/* <div> */}
+      {/* <div className="grid grid-rows-2 gap-4"></div>
       <div className="flex justify-between items-center gap-4 mb-4">
        {customer && (addressesInRegion?.length || 0) > 0 && (
           <div className="flex-1 max-w-md">
@@ -109,7 +111,49 @@ const ShippingAddress = ({
           </div>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="my-8">
+        <Checkbox
+          label="Billing address same as shipping address"
+          name="same_as_billing"
+          checked={checked}
+          onChange={onChange}
+          data-testid="billing-address-checkbox"
+        />
+      </div>
+      </div> */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {" "}
+        {/* Changed from grid-rows-2 to grid-cols-1 md:grid-cols-2 */}
+        <div className="flex justify-between items-center gap-2 mb-2">
+          {customer && (addressesInRegion?.length || 0) > 0 && (
+            <div className="flex-1 max-w-md">
+              <AddressSelect
+                addresses={customer.addresses}
+                addressInput={
+                  mapKeys(formData, (_, key) =>
+                    key.replace("shipping_address.", "")
+                  ) as HttpTypes.StoreCartAddress
+                }
+                onSelect={setFormAddress}
+              />
+            </div>
+          )}
+        </div>
+        <div className="my-8">
+          {" "}
+          {/* This div will now appear beside the AddressSelect on medium screens and up */}
+          <Checkbox
+            label="Billing address same as shipping address"
+            name="same_as_billing"
+            checked={checked}
+            onChange={onChange}
+            data-testid="billing-address-checkbox"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
         <Input
           label="First name"
           name="shipping_address.first_name"
@@ -180,17 +224,6 @@ const ShippingAddress = ({
           onChange={handleChange}
           data-testid="shipping-province-input"
         />
-      </div>
-      <div className="my-8">
-        <Checkbox
-          label="Billing address same as shipping address"
-          name="same_as_billing"
-          checked={checked}
-          onChange={onChange}
-          data-testid="billing-address-checkbox"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4 mb-4">
         <Input
           label="Email"
           name="email"

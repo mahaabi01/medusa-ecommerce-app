@@ -615,7 +615,7 @@ const Shipping: React.FC<ShippingProps> = ({
         />
         <Button
           size="large"
-          className="bg-green-900 hover:bg-green-700"
+          className="bg-green-900 hover:bg-green-700 ml-auto block"
           onClick={handleSubmit}
           isLoading={isLoading}
           disabled={!cart.shipping_methods?.[0]}
