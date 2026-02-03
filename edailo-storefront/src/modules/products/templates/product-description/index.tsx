@@ -10,16 +10,18 @@ const ProductDescription = ({ product }: ProductDescriptionProps) => {
     return null
   }
 
+  const points = product.description.split("\n").filter(point => point.trim() !== "")
+
   return (
     <div id="product-description" className="mt-8">
       <div className="flex flex-col gap-y-4">
         <h2 className="text-xl font-semibold">Description</h2>
-        <Text
-          className="text-base text-ui-fg-subtle whitespace-pre-line leading-relaxed"
-          data-testid="product-description"
-        >
-          {product.description}
-        </Text>
+
+        <ul className="list-disc list-inside space-y-2 text-base text-ui-fg-subtle leading-relaxed">
+          {points.map((point, index) => (
+            <li key={index}>{point}</li>
+          ))}
+        </ul>
       </div>
     </div>
   )
