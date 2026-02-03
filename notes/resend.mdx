@@ -1,0 +1,66 @@
+## Resend Notification
+## What was done ?
+* Integrated Resend email service into Medusa backend for order notifications
+* Created custom Resend module provider to handle email sending through Medusa's notification system
+* Configured order.placed event listener to trigger email notifications automatically
+* Implemented React Email templates for professional order confirmation emails
+
+## Packages Installed
+## Command used
+  * resend which is the Resend SDK:
+  npm install resend
+  * react-email, which is a package created by Resend to create email templates with React:
+  npm install @react-email/components -E
+  * email render package:
+  npm install @react-email/render
+
+## files modified
+        edailo/medusa-config.ts - Added Resend module configuration
+        edailo/package-lock.json - Updated package dependencies
+        edailo/package.json - Added new dependencies to project
+        edailo/yarn.lock - Updated yarn dependency tree
+
+## New Files Created
+# Module Structure
+edailo/src/modules/resend/
+├── service.ts                    # Main Resend notification provider service
+├── templates/                    # Email templates directory
+│   └── OrderPlaced.tsx          # Order confirmation email template
+└── index.ts                     # Module export file
+
+# Event Subscribers
+* edailo/src/subscribers/order-placed.ts - Listens for order.placed events and triggers email workflow
+
+# Workflow Implementation
+* edailo/src/workflows/send-order-confirmation.ts - Main workflow for sending order confirmation emails
+* edailo/src/workflows/steps/ - Contains individual workflow steps including send-notification.ts
+
+#Configuration & Documentation
+* edailo/pnpm-lock.yaml - Package manager lock file (if using pnpm)
+* notes/resend.mdx - This documentation file
+
+# Key Features Implemented
+* Modular Notification Provider - Custom Medusa module that extends AbstractNotificationProviderService
+* Template Management - Support for both string HTML and React component templates
+* Configuration Flexibility - Environment-based API keys and sender email configuration
+* Error Handling - Proper logging and error handling for failed email sends
+* Event-Driven Architecture - Email triggered automatically on order placement
+
+# Configuration Details
+* API Key Security - Resend API key stored in environment variables
+* Sender Configuration - Configurable "from" email address (development: onboarding@resend.dev)
+* Template Customization - Option to override default templates via configuration
+* Domain Verification - Production requires DNS verification for custom domains
+
+## Workflow Process
+* Customer places order → order.placed event emitted
+* order-placed.ts subscriber catches the event
+* send-order-confirmation.ts workflow is triggered
+* Resend module renders appropriate email template
+* Email sent via Resend API to customer's email
+
+## Development Notes
+* Development Mode: Uses onboarding@resend.dev which only sends to account owner email
+* Production Setup: Requires custom domain verification via DNS records
+*Testing: Check Resend dashboard logs for email delivery status
+* Troubleshooting: Enable detailed logging in Medusa for debugging failed sends
