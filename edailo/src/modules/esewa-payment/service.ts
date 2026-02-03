@@ -1,10 +1,28 @@
 import {
-  AbstractPaymentProvider,
-  PaymentProviderError,
-  PaymentProviderSessionResponse,
-  PaymentSessionStatus,
+  AuthorizePaymentInput,
+  AuthorizePaymentOutput,
+  CancelPaymentInput,
+  CancelPaymentOutput,
+  CapturePaymentInput,
+  CapturePaymentOutput,
+  DeletePaymentInput,
+  DeletePaymentOutput,
+  GetPaymentStatusInput,
+  GetPaymentStatusOutput,
+  InitiatePaymentInput,
+  InitiatePaymentOutput,
   ProviderWebhookPayload,
+  RefundPaymentInput,
+  RefundPaymentOutput,
+  RetrievePaymentInput,
+  RetrievePaymentOutput,
+  UpdatePaymentInput,
+  UpdatePaymentOutput,
   WebhookActionResult,
+} from "@medusajs/framework/types"
+import {
+  AbstractPaymentProvider,
+  PaymentSessionStatus,
 } from "@medusajs/framework/utils"
 import { Logger } from "@medusajs/framework/types"
 import crypto from "crypto"
@@ -15,20 +33,14 @@ type EsewaOptions = {
   environment: "test" | "production"
 }
 
-type PaymentIntentDataByStatus = {
-  [key: string]: {
-    session_data: Record<string, unknown>
-  }
-}
-
 export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
   static identifier = "esewa"
   protected logger_: Logger
   protected options_: EsewaOptions
 
-  constructor({ logger }, options: EsewaOptions) {
-    super(...arguments)
-    this.logger_ = logger
+  constructor(container: Record<string, unknown>, options: EsewaOptions) {
+    super(container, options)
+    this.logger_ = container.logger as Logger
     this.options_ = options
   }
 
@@ -42,34 +54,35 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
   }
 
   async getPaymentStatus(
-    paymentSessionData: Record<string, unknown>
-  ): Promise<PaymentSessionStatus> {
+    input: GetPaymentStatusInput
+  ): Promise<GetPaymentStatusOutput> {
+    const paymentSessionData = input.data || {}
     const status = paymentSessionData.status as string
     
     switch (status) {
       case "COMPLETE":
-        return PaymentSessionStatus.AUTHORIZED
+        return { status: PaymentSessionStatus.AUTHORIZED }
       case "PENDING":
-        return PaymentSessionStatus.PENDING
+        return { status: PaymentSessionStatus.PENDING }
       case "FAILED":
-        return PaymentSessionStatus.ERROR
+        return { status: PaymentSessionStatus.ERROR }
       case "CANCELED":
-        return PaymentSessionStatus.CANCELED
+        return { status: PaymentSessionStatus.CANCELED }
       default:
-        return PaymentSessionStatus.PENDING
+        return { status: PaymentSessionStatus.PENDING }
     }
   }
 
   async initiatePayment(
-    context: any
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse> {
+    input: InitiatePaymentInput
+  ): Promise<InitiatePaymentOutput> {
     const {
       amount,
       currency_code,
       context: cart_context,
       email,
       resource_id,
-    } = context
+    } = input as any
 
     try {
       // Log the context to debug
@@ -103,7 +116,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       const totalAmount = amountInRupees.toString()
 
       // Get country code - use 'dk' as default since that's your main region
-      const countryCode = 'dk'
+      const countryCode = 'np'
 
       // Create payment data - ALL fields are required by eSewa
       const paymentData = {
@@ -129,6 +142,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       console.log("- Signature:", signature)
 
       return {
+        id: transactionUuid,
         data: {
           ...paymentData,
           signature,
@@ -137,29 +151,21 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
           cart_id: cartId, // Store cart_id for reference (but payment button will use cart.id)
         },
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("❌ eSewa initiate payment error:", error)
-      return {
-        error: error.message,
-        code: "esewa_initiate_error",
-        detail: error,
-      }
+      throw error
     }
   }
 
   async authorizePayment(
-    paymentSessionData: Record<string, unknown>,
-    context: Record<string, unknown>
-  ): Promise<
-    PaymentProviderError | {
-      status: PaymentSessionStatus
-      data: PaymentProviderSessionResponse["data"]
-    }
-  > {
+    input: AuthorizePaymentInput
+  ): Promise<AuthorizePaymentOutput> {
     try {
       console.log("=== eSewa authorizePayment called ===")
-      console.log("Payment session data:", paymentSessionData)
-      console.log("Context:", context)
+      console.log("Input:", input)
+
+      const paymentSessionData = input.data || {}
+      const context = input.context || {}
 
       // CRITICAL FIX: In Medusa v2, the context is nested inside paymentSessionData
       // Extract it from the correct location
@@ -176,7 +182,7 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
         return {
           status: PaymentSessionStatus.ERROR,
           data: {
-            ...(paymentSessionData.data as Record<string, unknown>),
+            ...paymentSessionData,
             status: "ERROR",
             error: "Missing transaction details",
           },
@@ -187,9 +193,8 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       console.log("- Transaction Code:", transaction_code)
       console.log("- Transaction UUID:", transaction_uuid)
       
-      // Get total_amount from the nested data object
-      const sessionData = paymentSessionData.data as Record<string, unknown>
-      const totalAmount = sessionData.total_amount as string
+      // Get total_amount from the data object
+      const totalAmount = paymentSessionData.total_amount as string
 
       console.log("- Total Amount:", totalAmount)
 
@@ -205,22 +210,16 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       if (verificationResult.verified) {
         console.log("✅ Payment verified successfully with eSewa")
         
-        const authorizedData = {
+        return {
           status: PaymentSessionStatus.AUTHORIZED,
           data: {
-            ...sessionData,
+            ...paymentSessionData,
             status: "COMPLETE",
             transaction_code,
             verified_at: new Date().toISOString(),
             esewa_verification_data: verificationResult.data,
           },
         }
-        
-        console.log("Returning authorization data:")
-        console.log("- Status:", authorizedData.status)
-        console.log("- Data status:", authorizedData.data.status)
-        
-        return authorizedData
       }
 
       console.error("❌ Payment verification failed")
@@ -230,20 +229,18 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
       return {
         status: PaymentSessionStatus.ERROR,
         data: {
-          ...sessionData,
+          ...paymentSessionData,
           status: "ERROR",
           error: "Payment verification failed with eSewa",
           verification_result: verificationResult,
         },
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("❌ eSewa authorize payment error:", error)
       // Return error status with data
-      const sessionData = (paymentSessionData.data as Record<string, unknown>) || {}
       return {
         status: PaymentSessionStatus.ERROR,
         data: {
-          ...sessionData,
           status: "ERROR",
           error: error.message || "Authorization failed",
         },
@@ -252,16 +249,15 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
   }
 
   async capturePayment(
-    paymentSessionData: Record<string, unknown>
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse["data"]> {
+    input: CapturePaymentInput
+  ): Promise<CapturePaymentOutput> {
     // eSewa doesn't have separate capture - it's captured on authorization
-    return paymentSessionData
+    return { data: input.data || {} }
   }
 
   async refundPayment(
-    paymentSessionData: Record<string, unknown>,
-    refundAmount: number
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse["data"]> {
+    input: RefundPaymentInput
+  ): Promise<RefundPaymentOutput> {
     // Note: eSewa refunds are typically handled manually through merchant portal
     // This is a placeholder for refund logic
     this.logger_.warn(
@@ -269,38 +265,43 @@ export class EsewaPaymentService extends AbstractPaymentProvider<EsewaOptions> {
     )
     
     return {
-      ...paymentSessionData,
-      refund_amount: refundAmount,
-      refund_requested_at: new Date().toISOString(),
+      data: {
+        ...(input.data || {}),
+        refund_amount: input.amount,
+        refund_requested_at: new Date().toISOString(),
+      },
     }
   }
 
   async cancelPayment(
-    paymentSessionData: Record<string, unknown>
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse["data"]> {
+    input: CancelPaymentInput
+  ): Promise<CancelPaymentOutput> {
     return {
-      ...paymentSessionData,
-      status: "CANCELED",
-      canceled_at: new Date().toISOString(),
+      data: {
+        ...(input.data || {}),
+        status: "CANCELED",
+        canceled_at: new Date().toISOString(),
+      },
     }
   }
 
   async deletePayment(
-    paymentSessionData: Record<string, unknown>
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse["data"]> {
-    return paymentSessionData
+    input: DeletePaymentInput
+  ): Promise<DeletePaymentOutput> {
+    return { data: input.data || {} }
   }
 
   async retrievePayment(
-    paymentSessionData: Record<string, unknown>
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse["data"]> {
-    return paymentSessionData
+    input: RetrievePaymentInput
+  ): Promise<RetrievePaymentOutput> {
+    return { data: input.data || {} }
   }
 
   async updatePayment(
-    context: any
-  ): Promise<PaymentProviderError | PaymentProviderSessionResponse> {
-    return this.initiatePayment(context)
+    input: UpdatePaymentInput
+  ): Promise<UpdatePaymentOutput> {
+    const result = await this.initiatePayment(input as InitiatePaymentInput)
+    return { data: result.data }
   }
 
   async getWebhookActionAndData(

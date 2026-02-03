@@ -320,7 +320,7 @@ const EsewaPaymentButton = ({
         isLoading={submitting}
         onClick={handlePayment}
         size="large"
-        className="ml-auto block"
+        className="bg-success-primary hover:bg-success ml-auto block mt-2"
         data-testid={dataTestId}
       >
         Pay with eSewa
