@@ -84,7 +84,7 @@ const Addresses = ({
                 <BillingAddress cart={cart} />
               </div>
             )}
-            <SubmitButton className="mt-3 bg-green-800 hover:bg-green-700 ml-auto block" data-testid="submit-address-button">
+            <SubmitButton className="mt-3 bg-green-600 hover:bg-green-500 ml-auto block" data-testid="submit-address-button">
               {siteConfig.chechout.continuedelivery}
             </SubmitButton>
             {/* <ErrorMessage error={message} data-testid="address-error-message" /> */}

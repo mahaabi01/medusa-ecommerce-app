@@ -200,7 +200,7 @@ const Payment = ({
 
           <Button
             size="large"
-            className="bg-green-900 hover:bg-green-700 ml-auto block px-14 py-3"
+            className="bg-green-600 hover:bg-green-500 ml-auto block px-14 py-3"
             onClick={handleSubmit}
             isLoading={isLoading}
             disabled={

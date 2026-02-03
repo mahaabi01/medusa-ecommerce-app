@@ -145,7 +145,7 @@ const StripePaymentButton = ({
     <>
       <Button
         disabled={disabled || notReady}
-        className="bg-green-900 hover:bg-green-700 ml-auto block"
+        className="bg-green-600 hover:bg-green-500 ml-auto block "
         onClick={handlePayment}
         size="large"
         isLoading={submitting}
@@ -185,7 +185,7 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
     <>
       <Button
         disabled={notReady}
-        className="bg-green-900 hover:bg-green-700 ml-auto block mt-2"
+        className="bg-green-600 hover:bg-green-500 ml-auto block mt-2 px-14 py-3"
         isLoading={submitting}
         onClick={handlePayment}
         size="large"
@@ -320,7 +320,7 @@ const EsewaPaymentButton = ({
         isLoading={submitting}
         onClick={handlePayment}
         size="large"
-        className="bg-success-primary hover:bg-success ml-auto block mt-2"
+        className="bg-green-600 hover:bg-green-500 ml-auto block mt-2 px-14 py-3"
         data-testid={dataTestId}
       >
         Pay with eSewa

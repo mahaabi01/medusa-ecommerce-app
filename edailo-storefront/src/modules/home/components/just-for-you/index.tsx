@@ -5,6 +5,16 @@ import { FeaturedSlider } from "./featured-slider"
 import { LoadMoreProducts } from "./load-more-products"
 import { Suspense } from "react"
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export default async function JustForYou({
   countryCode,
   region,
@@ -14,13 +24,13 @@ export default async function JustForYou({
   region: HttpTypes.StoreRegion
   limit?: number
 }) {
-  // Fetch products using the same method as ProductList
+  // Fetch more products for better shuffle variety
   const {
     response: { products },
   } = await listProductsWithSort({
     page: 1,
     queryParams: {
-      limit: 12, // Fetch 12 products (1 featured + 8 grid + extras)
+      limit: 30, // Fetch more products for better variety (3x the needed amount)
     },
     sortBy: "created_at",
     countryCode,
@@ -34,15 +44,15 @@ export default async function JustForYou({
     return null
   }
 
-  // Pick a random product as featured, remaining for grid (4×2)
-  const randomIndex = Math.floor(Math.random() * products.length)
-  const featuredProduct = products[randomIndex]
-  
-  // Get 8 products for grid, excluding the featured one
-  const gridProducts = products
-    .filter((_, index) => index !== randomIndex)
-    .slice(0, 8) // Get exactly 8 products for the 4×2 grid
-  
+  // Shuffle all products for variety on each page refresh
+  const shuffledProducts = shuffleArray(products)
+
+  // Pick the first shuffled product as featured
+  const featuredProduct = shuffledProducts[0]
+
+  // Get 8 products for grid from the remaining shuffled products
+  const gridProducts = shuffledProducts.slice(1, 9) // Get exactly 8 products for the 4×2 grid
+
   // Calculate slider height to match 2 rows of cards
   // Card height: 286px, Gap: 16px
   // Total height: (2 × 286) + (1 × 16) = 572 + 16 = 588px
@@ -52,16 +62,27 @@ export default async function JustForYou({
     <div className="bg-white">
       <div className="content-container py-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-ui-fg-base">Just For You</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-ui-fg-base">
+            Just For You
+          </h2>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4">
           {/* LEFT: Featured Product Card (Large) - Fixed height to match 2 rows */}
           <div className="flex-1">
-            <Suspense fallback={
-              <div className="bg-gray-200 rounded-lg animate-pulse" style={{ height: `${sliderHeight}px` }} />
-            }>
-              <FeaturedSlider product={featuredProduct} countryCode={countryCode} height={sliderHeight} />
+            <Suspense
+              fallback={
+                <div
+                  className="bg-gray-200 rounded-lg animate-pulse"
+                  style={{ height: `${sliderHeight}px` }}
+                />
+              }
+            >
+              <FeaturedSlider
+                product={featuredProduct}
+                countryCode={countryCode}
+                height={sliderHeight}
+              />
             </Suspense>
           </div>
 
@@ -70,10 +91,7 @@ export default async function JustForYou({
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {gridProducts.map((product) => (
                 <div key={product.id} className="w-[192px] h-[286px]">
-                  <ProductCard
-                    product={product}
-                    region={region}
-                  />
+                  <ProductCard product={product} region={region} />
                 </div>
               ))}
             </div>
@@ -81,7 +99,11 @@ export default async function JustForYou({
         </div>
 
         {/* Load More Section */}
-        <LoadMoreProducts countryCode={countryCode} region={region} initialPage={2} />
+        <LoadMoreProducts
+          countryCode={countryCode}
+          region={region}
+          initialPage={2}
+        />
       </div>
     </div>
   )

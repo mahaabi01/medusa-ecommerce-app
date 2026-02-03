@@ -11,6 +11,7 @@ export default async function SubNavbar() {
 
   try {
     categories = await listCategories({ limit: 50 });
+    console.log("Fetched categories:", categories);
   } catch (error) {
     console.error("Failed to fetch categories:", error);
   }

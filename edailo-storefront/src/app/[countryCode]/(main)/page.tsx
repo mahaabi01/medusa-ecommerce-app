@@ -4,6 +4,7 @@ import FeaturedProducts from "@modules/home/components/featured-products"
 import HeroSlider from "@modules/home/components/hero-slider"
 import AdSlider from "@modules/home/components/ad-slider"
 import ProductList from "@modules/home/components/product-list"
+import ShuffledProductList from "@modules/home/components/shuffled-product-list"
 import JustForYou from "@modules/home/components/just-for-you"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
@@ -11,8 +12,7 @@ import { siteConfig } from "../../../../config/siteConfig"
 
 export const metadata: Metadata = {
   title: siteConfig.metadata.title,
-  description:
-    siteConfig.metadata.description
+  description: siteConfig.metadata.description,
 }
 
 export default async function Home(props: {
@@ -36,10 +36,10 @@ export default async function Home(props: {
     <>
       {/* Hero Section */}
       <HeroSlider />
-      
+
       {/* Latest Products Section */}
       <div className="bg-white dark:bg-ui-bg-base">
-        <ProductList 
+        <ProductList
           countryCode={countryCode}
           limit={12}
           type="latest"
@@ -53,10 +53,9 @@ export default async function Home(props: {
 
       {/* Today's Deals Section */}
       <div>
-        <ProductList 
+        <ShuffledProductList
           countryCode={countryCode}
           limit={12}
-          type="deals"
           title="Today's Best Deals"
           showAll={true}
         />
