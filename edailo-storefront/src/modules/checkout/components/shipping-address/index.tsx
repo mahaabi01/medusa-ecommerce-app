@@ -94,22 +94,22 @@ const ShippingAddress = ({
 
   return (
     <>
-      {customer && (addressesInRegion?.length || 0) > 0 && (
-        <Container className="mb-6 flex flex-col gap-y-4 p-5">
-          <p className="text-small-regular">
-            {`Hi ${customer.first_name}, do you want to use one of your saved addresses?`}
-          </p>
-          <AddressSelect
-            addresses={customer.addresses}
-            addressInput={
-              mapKeys(formData, (_, key) =>
-                key.replace("shipping_address.", "")
-              ) as HttpTypes.StoreCartAddress
-            }
-            onSelect={setFormAddress}
-          />
-        </Container>
-      )}
+      <div className="flex justify-between items-center gap-4 mb-4">
+        <h3 className="text-large-semi">Shipping Address</h3>
+        {customer && (addressesInRegion?.length || 0) > 0 && (
+          <div className="flex-1 max-w-md">
+            <AddressSelect
+              addresses={customer.addresses}
+              addressInput={
+                mapKeys(formData, (_, key) =>
+                  key.replace("shipping_address.", "")
+                ) as HttpTypes.StoreCartAddress
+              }
+              onSelect={setFormAddress}
+            />
+          </div>
+        )}
+      </div>
       <div className="grid grid-cols-2 gap-4">
         <Input
           label="First name"

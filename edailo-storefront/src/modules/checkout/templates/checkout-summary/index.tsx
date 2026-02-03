@@ -13,7 +13,7 @@ const CheckoutSummary = ({ cart }: { cart: any }) => {
         <Divider className="my-6 small:hidden" />
         <Heading
           level="h2"
-          className="flex flex-row text-3xl-regular items-baseline"
+          className="flex flex-row text-xl-regular items-baseline"
         >
           {siteConfig.chechout.inCart}
         </Heading>
