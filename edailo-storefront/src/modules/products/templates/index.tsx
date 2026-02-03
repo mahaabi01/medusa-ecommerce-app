@@ -43,11 +43,6 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             {/* Left Column - Image Gallery (45% width) */}
             <div className="w-full lg:w-[45%]">
               <ImageGallery images={images} />
-
-              {/* Product Description below image */}
-              <div className="mt-8">
-                <ProductDescription product={product} />
-              </div>
             </div>
 
             {/* Right Column - Product Details (55% width with max constraint) */}
@@ -70,6 +65,10 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
                 <ProductActionsWrapper id={product.id} region={region} />
               </Suspense>
             </div>
+          </div>
+          {/* Product Description below image */}
+          <div className="mt-16 width-full">
+            <ProductDescription product={product} />
           </div>
         </div>
 

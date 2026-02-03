@@ -71,13 +71,12 @@ const Shipping: React.FC<ShippingProps> = ({
 
   const isOpen = searchParams.get("step") === "delivery"
 
-  const _shippingMethods = availableShippingMethods?.filter(
-    (sm) => sm.service_zone?.fulfillment_set?.type !== "pickup"
-  )
+  // Note: service_zone is not available on StoreCartShippingOption type
+  // Only service_zone_id is available. To properly filter pickup vs shipping,
+  // you'd need to expand the relation or use a different approach
+  const _shippingMethods = availableShippingMethods
 
-  const _pickupMethods = availableShippingMethods?.filter(
-    (sm) => sm.service_zone?.fulfillment_set?.type === "pickup"
-  )
+  const _pickupMethods: HttpTypes.StoreCartShippingOption[] = []
 
   const hasPickupOptions = !!_pickupMethods?.length
 
@@ -587,10 +586,7 @@ const Shipping: React.FC<ShippingProps> = ({
                           {option.name}
                         </span>
                         <span className="text-ui-fg-muted text-sm">
-                          {formatAddress(
-                            option.service_zone?.fulfillment_set?.location
-                              ?.address
-                          )}
+                          {/* Address not available - service_zone relation not expanded */}
                         </span>
                       </div>
                     </div>

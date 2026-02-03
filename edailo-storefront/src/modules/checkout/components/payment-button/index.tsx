@@ -290,7 +290,7 @@ const EsewaPaymentButton = ({
 
     // Validate required fields
     const requiredFields = ['amount', 'total_amount', 'transaction_uuid', 'product_code', 'signature']
-    const missingFields = requiredFields.filter(field => !fields[field])
+    const missingFields = requiredFields.filter(field => !fields[field as keyof typeof fields])
     
     if (missingFields.length > 0) {
       console.error("❌ Missing required fields:", missingFields)
