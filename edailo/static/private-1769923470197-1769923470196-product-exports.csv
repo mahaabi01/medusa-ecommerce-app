@@ -1,0 +1,55 @@
+Product Id,Product Handle,Product Title,Product Status,Product Thumbnail,Product Sales Channel 1,Variant Id
+prod_01KFDQ58XZCMY27AWMSNCDTV67,sweatshirt,Medusa Sweatshirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatshirt-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5921N3CPSY4B7NMZ6B16
+prod_01KFDQ58XZCMY27AWMSNCDTV67,sweatshirt,Medusa Sweatshirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatshirt-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5922KVV0VT8DG5QWHK05
+prod_01KFDQ58XZCMY27AWMSNCDTV67,sweatshirt,Medusa Sweatshirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatshirt-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5922Z8WJSW7SN8EAACJ7
+prod_01KFDQ58XZCMY27AWMSNCDTV67,sweatshirt,Medusa Sweatshirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatshirt-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ59226Q4ZMB74SYJQDH6A
+prod_01KFDQ58XZF6CY78RA4SJX21DX,sweatpants,Medusa Sweatpants,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatpants-gray-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5922K7CMWZ3JSZTJEN90
+prod_01KFDQ58XZF6CY78RA4SJX21DX,sweatpants,Medusa Sweatpants,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatpants-gray-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5923KP2KPVWRYWXZQB5D
+prod_01KFDQ58XZF6CY78RA4SJX21DX,sweatpants,Medusa Sweatpants,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatpants-gray-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ59234S2YMN7QT3SX5HWQ
+prod_01KFDQ58XZF6CY78RA4SJX21DX,sweatpants,Medusa Sweatpants,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/sweatpants-gray-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5923TPY9SZ7FY22BA1CY
+prod_01KFDQ58XZQY0KHD0AFPCP66AZ,shorts,Medusa Shorts,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/shorts-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ59238GTK99VK65XYJB7Z
+prod_01KFDQ58XZQY0KHD0AFPCP66AZ,shorts,Medusa Shorts,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/shorts-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5923KGW43MA11KB07CGR
+prod_01KFDQ58XZQY0KHD0AFPCP66AZ,shorts,Medusa Shorts,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/shorts-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5924GWB8YHSCJCAV5PWQ
+prod_01KFDQ58XZQY0KHD0AFPCP66AZ,shorts,Medusa Shorts,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/shorts-vintage-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5924S393DQCYNQM0Z1V4
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ591ZMJDWZE7G5H4D2P03
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ591ZR436QFR1VJ4ZJ1VT
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ59206WR74RRQQDSKJDMK
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ592045NB0N2HZGTPMVDT
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5920DFVRVPE53DHTD50T
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5920E87Y0FZNA4WBW5HC
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5921VGE6YE9QS5Z4RVK6
+prod_01KFDQ58XZV2JVY1E6CGGHDV14,t-shirt,Medusa T-Shirt,published,https://medusa-public-images.s3.eu-west-1.amazonaws.com/tee-black-front.png,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFDQ5921QGCN371KDGBY1GWW
+prod_01KFFFKZS7YDQR5G5JQBFBRCG7,mobile,Mobile,published,,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KFFFKZYAAM4GSFMNGXJGAPAP
+prod_01KG4BM49H7SZDE8H57RB64N1F,chair-cozy,Chair,published,http://localhost:9000/static/1769672937731-chair.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG4BM4G7NVFXFRCV7M2J6T6E
+prod_01KG4RNPA2P8KASNJ8V3EEW90M,soda-asthetic,Sofa,published,http://localhost:9000/static/1769686620402-sofa122.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG4RNPJNR8MDK9YEC0RE89P7
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2FYJRQP8YQ9SDCM0X1
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2FVV79A1A05GPSJT4X
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2GKBJX3WD3JK00N3FF
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2GT6XF8DCWSTFC5XWW
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2HAQWK6F4AF6CV8QEA
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2HSM990ERE3564H7M4
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2JQRK854RZ0J9ZG5GP
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2JZZG1PJSFHKZDWD7T
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2KZKBM9147GMPNANY8
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2K77RKCHQ0X55RE3GG
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2MCB94Y3F7JE37YMC7
+prod_01KG585PYE46KHGFZDEMS62P5F,ladies-bag,Bag,published,http://localhost:9000/static/1769702874007-bag.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG585Q2MNCN9ECTT8PH5TGJV
+prod_01KG6Q00R9HYF6WQVCE5Y9AA6W,hello-product,Hello This is the product having long name,published,http://localhost:9000/static/1769751970530-bed.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6Q00WMGZSYFS7JG9FEKWSH
+prod_01KG6Q00R9HYF6WQVCE5Y9AA6W,hello-product,Hello This is the product having long name,published,http://localhost:9000/static/1769751970530-bed.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6Q00WNKQE2ME92DZR586GG
+prod_01KG6Q00R9HYF6WQVCE5Y9AA6W,hello-product,Hello This is the product having long name,published,http://localhost:9000/static/1769751970530-bed.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6Q00WPKRGED2QXK4EYYN2V
+prod_01KG6Q00R9HYF6WQVCE5Y9AA6W,hello-product,Hello This is the product having long name,published,http://localhost:9000/static/1769751970530-bed.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6Q00WPW5498ZKVG7YK4G6Q
+prod_01KG6VF9RBCP4D3FMXC38GRQ1E,gaming-keyboard,KeyBoard,published,http://localhost:9000/static/1769756665577-pexels-katetrifo-4383928.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VF9X9RMV1BYWB84X8ZM90
+prod_01KG6VF9RBCP4D3FMXC38GRQ1E,gaming-keyboard,KeyBoard,published,http://localhost:9000/static/1769756665577-pexels-katetrifo-4383928.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VF9XCT647SY4ZBNX1QG96
+prod_01KG6VPY4E3G5H6QB1QH0HEZXK,pen,Pens,published,http://localhost:9000/static/1769756915828-pexels-planka-27170969.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VPY73JBDA9ZDM2DZQRH4F
+prod_01KG6VPY4E3G5H6QB1QH0HEZXK,pen,Pens,published,http://localhost:9000/static/1769756915828-pexels-planka-27170969.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VPY73VVA9MAGV5WN9TFJ1
+prod_01KG6VPY4E3G5H6QB1QH0HEZXK,pen,Pens,published,http://localhost:9000/static/1769756915828-pexels-planka-27170969.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VPY749XE4Y1SXWNJ4Q17T
+prod_01KG6VTYVTVTD8CMWAKN1HZ9H8,diary,Diary,published,http://localhost:9000/static/1769757047655-pexels-polina-kovaleva-5546885.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VTYX93ZMDTDDDXGST1Z6D
+prod_01KG6VZ5CZ0M8AGMNGTSVTTB7X,copy,Sulav Thick Rough Copy (Set Of 6),published,http://localhost:9000/static/1769757185412-pexels-jessbaileydesign-745760.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VZ5F884ST0CMAAKG08KT4
+prod_01KG6VZ5CZ0M8AGMNGTSVTTB7X,copy,Sulav Thick Rough Copy (Set Of 6),published,http://localhost:9000/static/1769757185412-pexels-jessbaileydesign-745760.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VZ5F8FTNFX701XC4M47SS
+prod_01KG6VZ5CZ0M8AGMNGTSVTTB7X,copy,Sulav Thick Rough Copy (Set Of 6),published,http://localhost:9000/static/1769757185412-pexels-jessbaileydesign-745760.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6VZ5F8KRV6WYWB5S5CZ75Q
+prod_01KG6W35HPPXQBQ8C5AZ7KWSK4,pen-new,Pen,published,http://localhost:9000/static/1769757316641-pexels-karolina-grabowska-4968714.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6W35KX89P7AFV557R9E1X3
+prod_01KG6X0CS2X3HBG3Y7HQ7YKK4F,football,Football,published,http://localhost:9000/static/1769758274292-pexels-pixabay-46798.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG6X0D03TGMR79TV8YN4MPKQ
+prod_01KG79TRAE86B4CNHG52JBHDMC,badminton,Badminton,published,http://localhost:9000/static/1769771721011-pexels-saif71-6742704.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG79TREYMNN0MM647SPGBDVH
+prod_01KG79TRAE86B4CNHG52JBHDMC,badminton,Badminton,published,http://localhost:9000/static/1769771721011-pexels-saif71-6742704.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG79TREYNCYDJVZP5YQ1X2PD
+prod_01KG79TRAE86B4CNHG52JBHDMC,badminton,Badminton,published,http://localhost:9000/static/1769771721011-pexels-saif71-6742704.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KG79TREZC4F3M5FQSPB0M3D7
+prod_01KGBTEAC9K4D5AHMPZG88WKR6,cricket-ball,Cricket,published,http://localhost:9000/static/1769923357010-pexels-manoj-poosam-3217664-30401060.jpg,sc_01KFDQ50QE0S0HT51FCWXZ204S,variant_01KGBTEAHMQBKPF59GR4WBV7SQ
