@@ -98,7 +98,7 @@ export default function SearchBar() {
         />
         <button
           onClick={handleSearch}
-          className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#EC1158] opacity-60 hover:bg-[#EC1158]text-white rounded-full transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1 bg-primary opacity-60 hover:bg-[#EC1158]text-white rounded-full transition-colors"
           aria-label="Search"
         >
           <Search size={16} color="white" />

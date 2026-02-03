@@ -43,13 +43,13 @@ const Addresses = ({
   return (
     <div className="bg-white">
       <div className="flex flex-row items-center justify-between mb-2">
-        {/* <Heading
+        <Heading
           level="h2"
           className="flex flex-row text-xl-regular gap-x-2 items-baseline"
         >
          {siteConfig.chechout.shippingaddres}
           {!isOpen && <CheckCircleSolid />}
-        </Heading> */}
+        </Heading>
         {!isOpen && cart?.shipping_address && (
           <Text>
             <button

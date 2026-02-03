@@ -75,8 +75,6 @@ const Payment = ({
     })
   }
 
-  
-
   const handleSubmit = async () => {
     setIsLoading(true)
     try {
@@ -100,7 +98,7 @@ const Payment = ({
           }
         )
       }
-      
+
       // For eSewa, go to review step
       if (isEsewa(selectedPaymentMethod)) {
         return router.push(
@@ -127,14 +125,14 @@ const Payment = ({
         <Heading
           level="h2"
           className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
+            "flex flex-row text-xl-regular gap-x-2 items-baseline",
             {
               "opacity-50 pointer-events-none select-none":
                 !isOpen && !paymentReady,
             }
           )}
         >
-         {siteConfig.chechout.payment}
+          {siteConfig.chechout.payment}
           {!isOpen && paymentReady && <CheckCircleSolid />}
         </Heading>
         {!isOpen && paymentReady && (
@@ -184,7 +182,7 @@ const Payment = ({
           {paidByGiftcard && (
             <div className="flex flex-col w-1/3">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
-               {siteConfig.chechout.paymethod}
+                {siteConfig.chechout.paymethod}
               </Text>
               <Text
                 className="txt-medium text-ui-fg-subtle"
@@ -222,7 +220,7 @@ const Payment = ({
             <div className="flex items-start gap-x-1 w-full">
               <div className="flex flex-col w-1/3">
                 <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  {siteConfig.chechout.paymethod} 
+                  {siteConfig.chechout.paymethod}
                 </Text>
                 <Text
                   className="txt-medium text-ui-fg-subtle"

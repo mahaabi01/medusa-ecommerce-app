@@ -111,26 +111,25 @@
   }
 }
 
-
 @layer base {
   :root {
     --navbar: 242 77%, 9%;
     --footer: 242 77%, 9%;
     --foreground: 0 0% 0%;
     --white-foreground: 0 0% 100%;
-     --primary: 196 98% 43%;
+    --primary: 196 98% 43%;
     --primary-foreground: 0 0% 100%;
-     --success: 160 84% 39%;
-    --card-bg :0  0%, 87%;
+    --success: 160 84% 39%;
+    --card-bg: 0 0%, 87%;
   }
   .dark {
-    --navbar:242 77%, 9%;
+    --navbar: 242 77%, 9%;
     --footer: 242 77%, 9%;
-   --foreground: 0 0% 100%; 
-   --footer-foreground: 0 0% 100%;
+    --foreground: 0 0% 100%;
+    --footer-foreground: 0 0% 100%;
     --primary: 196 98% 50%;
     --primary-foreground: 0 0% 100%;
-      --success: 160 70% 45%;
-    --card-bg :0  0%, 87%;
+    --success: 160 70% 45%;
+    --card-bg: 0 0%, 87%;
   }
 }

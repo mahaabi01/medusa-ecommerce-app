@@ -95,8 +95,7 @@ const ShippingAddress = ({
   return (
     <>
       <div className="flex justify-between items-center gap-4 mb-4">
-        <h3 className="text-large-semi">Shipping Address</h3>
-        {customer && (addressesInRegion?.length || 0) > 0 && (
+       {customer && (addressesInRegion?.length || 0) > 0 && (
           <div className="flex-1 max-w-md">
             <AddressSelect
               addresses={customer.addresses}
