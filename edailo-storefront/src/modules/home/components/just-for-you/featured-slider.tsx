@@ -10,11 +10,11 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 export function FeaturedSlider({
   product,
   countryCode,
-  height = 588,
+  height = null,
 }: {
   product: HttpTypes.StoreProduct
   countryCode: string
-  height?: number
+  height?: number | null
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
@@ -50,10 +50,7 @@ export function FeaturedSlider({
       href={`/products/${product.handle}`}
       className="block w-full h-full"
     >
-      <div
-        className="relative w-full cursor-pointer group"
-        style={{ height: `${height}px` }}
-      >
+      <div className="relative w-full h-full cursor-pointer group">
         <div className="relative w-full h-full bg-gray-50 rounded-lg overflow-hidden">
           {currentImage && (
             <Image

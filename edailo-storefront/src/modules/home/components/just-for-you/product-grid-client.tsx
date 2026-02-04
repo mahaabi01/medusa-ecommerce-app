@@ -3,23 +3,26 @@
 import { HttpTypes } from "@medusajs/types"
 import { useState } from "react"
 import ProductCardClient from "./product-card-client"
+import { FeaturedSlider } from "./featured-slider"
 
-export function LoadMoreProducts({
-  countryCode,
-  region,
+export function ProductGridClient({
+  featuredProduct,
+  initialProducts,
   remainingProducts,
-  totalProducts,
+  region,
+  countryCode,
 }: {
-  countryCode: string
-  region: HttpTypes.StoreRegion
+  featuredProduct: HttpTypes.StoreProduct
+  initialProducts: HttpTypes.StoreProduct[]
   remainingProducts: HttpTypes.StoreProduct[]
-  totalProducts: number
+  region: HttpTypes.StoreRegion
+  countryCode: string
 }) {
-  const [displayedProducts, setDisplayedProducts] = useState<HttpTypes.StoreProduct[]>([])
+  const [displayedProducts, setDisplayedProducts] = useState<HttpTypes.StoreProduct[]>(initialProducts)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(false)
   
-  const productsPerLoad = 12 // Load 12 products at a time (2 rows × 6 columns)
+  const productsPerLoad = 12 // Load 12 products at a time
   const hasMore = currentIndex < remainingProducts.length
 
   const loadMore = async () => {
@@ -33,30 +36,34 @@ export function LoadMoreProducts({
     
     console.log(`Loading products ${currentIndex} to ${currentIndex + nextBatch.length} of ${remainingProducts.length} remaining`)
     
+    // Add new products to the existing grid
     setDisplayedProducts((prev) => [...prev, ...nextBatch])
     setCurrentIndex((prev) => prev + nextBatch.length)
     setLoading(false)
   }
 
-  // Don't show anything if there are no remaining products
-  if (remainingProducts.length === 0) {
-    return null
-  }
-
   return (
     <>
-      {displayedProducts.length > 0 && (
-        <div className="mt-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {displayedProducts.map((product) => (
-              <div key={product.id} className="w-full">
-                <ProductCardClient product={product} region={region} />
-              </div>
-            ))}
-          </div>
+      {/* Unified Grid with Featured Product taking 2x2 space */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {/* Featured Product - Takes 2 columns × 2 rows */}
+        <div className="col-span-2 row-span-2">
+          <FeaturedSlider
+            product={featuredProduct}
+            countryCode={countryCode}
+            height={null} // Let it size naturally to match 2 rows
+          />
         </div>
-      )}
 
+        {/* Regular Products */}
+        {displayedProducts.map((product) => (
+          <div key={product.id}>
+            <ProductCardClient product={product} region={region} />
+          </div>
+        ))}
+      </div>
+
+      {/* Load More Button */}
       {hasMore && (
         <div className="flex justify-center mt-6">
           <button

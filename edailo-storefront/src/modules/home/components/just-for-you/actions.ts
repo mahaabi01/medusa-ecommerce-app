@@ -5,7 +5,8 @@ import { HttpTypes } from "@medusajs/types"
 
 export async function loadMoreJustForYouProducts(
   countryCode: string,
-  page: number
+  page: number,
+  excludeProductIds: string[] = []
 ): Promise<{
   products: HttpTypes.StoreProduct[]
   hasMore: boolean
@@ -13,9 +14,6 @@ export async function loadMoreJustForYouProducts(
   try {
     const limit = 12 // Fetch 12 products (2 rows × 6 columns)
     
-    // Calculate offset: page 1 = 0, page 2 = 12, page 3 = 24, etc.
-    // But we need to account for the initial 12 products already shown
-    // So page 2 should start at offset 12
     const {
       response: { products, count },
       nextPage,
@@ -27,10 +25,15 @@ export async function loadMoreJustForYouProducts(
       countryCode,
     })
 
-    console.log(`Load More - Page: ${page}, Products fetched: ${products?.length}, Total count: ${count}, Has next: ${nextPage !== null}`)
+    // Filter out products that are already displayed
+    const filteredProducts = products?.filter(
+      product => !excludeProductIds.includes(product.id)
+    ) || []
+
+    console.log(`Load More - Page: ${page}, Products fetched: ${products?.length}, After filtering: ${filteredProducts.length}, Total count: ${count}, Has next: ${nextPage !== null}`)
 
     return {
-      products: products || [],
+      products: filteredProducts,
       hasMore: nextPage !== null,
     }
   } catch (error) {

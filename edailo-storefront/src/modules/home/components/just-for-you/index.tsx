@@ -1,8 +1,7 @@
 import { HttpTypes } from "@medusajs/types"
 import { listProductsWithSort } from "@lib/data/products"
-import ProductCard from "@modules/home/components/product-card"
 import { FeaturedSlider } from "./featured-slider"
-import { LoadMoreProducts } from "./load-more-products"
+import { ProductGridClient } from "./product-grid-client"
 import { Suspense } from "react"
 
 // Fisher-Yates shuffle algorithm
@@ -24,13 +23,13 @@ export default async function JustForYou({
   region: HttpTypes.StoreRegion
   limit?: number
 }) {
-  // Fetch more products for better shuffle variety
+  // Fetch ALL products to ensure we can show everything
   const {
-    response: { products },
+    response: { products, count },
   } = await listProductsWithSort({
     page: 1,
     queryParams: {
-      limit: 30, // Fetch more products for better variety (3x the needed amount)
+      limit: 100, // Fetch all products (increase if you have more than 100)
     },
     sortBy: "created_at",
     countryCode,
@@ -50,8 +49,11 @@ export default async function JustForYou({
   // Pick the first shuffled product as featured
   const featuredProduct = shuffledProducts[0]
 
-  // Get 8 products for grid from the remaining shuffled products
-  const gridProducts = shuffledProducts.slice(1, 9) // Get exactly 8 products for the 4×2 grid
+  // Get 8 products for initial grid from the remaining shuffled products
+  const initialGridProducts = shuffledProducts.slice(1, 9) // Get exactly 8 products for the 4×2 grid
+
+  // Get remaining products for "Load More" (excluding the first 9)
+  const remainingProducts = shuffledProducts.slice(9)
 
   // Calculate slider height to match 2 rows of cards
   // Card height: 286px, Gap: 16px
@@ -67,43 +69,15 @@ export default async function JustForYou({
           </h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-4">
-          {/* LEFT: Featured Product Card (Large) - Fixed height to match 2 rows */}
-          <div className="flex-1">
-            <Suspense
-              fallback={
-                <div
-                  className="bg-gray-200 rounded-lg animate-pulse"
-                  style={{ height: `${sliderHeight}px` }}
-                />
-              }
-            >
-              <FeaturedSlider
-                product={featuredProduct}
-                countryCode={countryCode}
-                height={sliderHeight}
-              />
-            </Suspense>
-          </div>
-
-          {/* RIGHT: Product Grid (4×2 = 8 cards) - Fixed width: (4 × 192) + (3 × 16) = 816px */}
-          <div className="w-full lg:w-[816px]">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {gridProducts.map((product) => (
-                <div key={product.id} className="w-[192px] h-[286px]">
-                  <ProductCard product={product} region={region} />
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="mb-4">
+          <ProductGridClient
+            featuredProduct={featuredProduct}
+            initialProducts={initialGridProducts}
+            remainingProducts={remainingProducts}
+            region={region}
+            countryCode={countryCode}
+          />
         </div>
-
-        {/* Load More Section */}
-        <LoadMoreProducts
-          countryCode={countryCode}
-          region={region}
-          initialPage={2}
-        />
       </div>
     </div>
   )
