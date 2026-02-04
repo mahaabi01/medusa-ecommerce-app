@@ -29,7 +29,8 @@
     "@medusajs/medusa": "2.12.5",
     "@react-email/components": "1.0.6",
     "@react-email/render": "^2.0.4",
-    "resend": "6.8.0"
+    "resend": "6.8.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.12.5",
