@@ -47,7 +47,7 @@ export function ProductGridClient({
       {/* Unified Grid with Featured Product taking 2x2 space */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {/* Featured Product - Takes 2 columns × 2 rows */}
-        <div className="col-span-2 row-span-2">
+        <div key={`featured-${featuredProduct.id}`} className="col-span-2 row-span-2">
           <FeaturedSlider
             product={featuredProduct}
             countryCode={countryCode}
@@ -56,8 +56,8 @@ export function ProductGridClient({
         </div>
 
         {/* Regular Products */}
-        {displayedProducts.map((product) => (
-          <div key={product.id}>
+        {displayedProducts.map((product, index) => (
+          <div key={`product-${product.id}-${index}`}>
             <ProductCardClient product={product} region={region} />
           </div>
         ))}
