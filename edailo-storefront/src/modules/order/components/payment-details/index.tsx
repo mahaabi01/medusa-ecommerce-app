@@ -16,14 +16,14 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
   return (
     <div>
       <Heading level="h2" className="flex flex-row text-base font-medium mb-3">
-       {siteConfig.chechout.payment}
+        {siteConfig.chechout.payment}
       </Heading>
       <div>
         {payment && (
           <div className="flex items-start gap-x-1 w-full">
             <div className="flex flex-col w-1/3">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
-               {siteConfig.chechout.paymethod}
+                {siteConfig.chechout.paymethod}
               </Text>
               <Text
                 className="txt-medium text-ui-fg-subtle"

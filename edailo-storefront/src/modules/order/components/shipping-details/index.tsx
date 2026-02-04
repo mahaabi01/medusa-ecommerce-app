@@ -44,7 +44,9 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
           className="flex flex-col w-1/3 "
           data-testid="shipping-contact-summary"
         >
-          <Text className="txt-medium-plus text-ui-fg-base mb-1">{siteConfig.chechout.contact}</Text>
+          <Text className="txt-medium-plus text-ui-fg-base mb-1">
+            {siteConfig.chechout.contact}
+          </Text>
           <Text className="txt-medium text-ui-fg-subtle">
             {order.shipping_address?.phone}
           </Text>
@@ -55,7 +57,9 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
           className="flex flex-col w-1/3"
           data-testid="shipping-method-summary"
         >
-          <Text className="txt-medium-plus text-ui-fg-base mb-1">{siteConfig.chechout.method}</Text>
+          <Text className="txt-medium-plus text-ui-fg-base mb-1">
+            {siteConfig.chechout.method}
+          </Text>
           <Text className="txt-medium text-ui-fg-subtle">
             {(order as any).shipping_methods[0]?.name} (
             {convertToLocale({

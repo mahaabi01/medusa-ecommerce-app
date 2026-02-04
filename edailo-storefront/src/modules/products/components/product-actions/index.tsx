@@ -276,7 +276,7 @@ export default function ProductActions({
             onClick={handleAddToCart}
             disabled={isButtonDisabled}
             variant="primary"
-            className="w-full h-11 text-sm font-medium bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-white"
+            className="w-full h-11 text-sm font-medium bg-green-600 hover:bg-green-500 active:bg-green-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-white"
             isLoading={isAdding}
             data-testid="add-product-button"
           >
