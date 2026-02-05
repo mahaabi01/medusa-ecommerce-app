@@ -20,42 +20,100 @@ export default async function ProductCard({
   const imageUrl = product.thumbnail || product.images?.[0]?.url
 
   return (
-    <LocalizedClientLink 
-      href={`/products/${product.handle}`} 
-      className="group block h-full"
+    // <LocalizedClientLink
+    //   href={`/products/${product.handle}`}
+    //   className="group block h-full"
+    // >
+    //   <div
+    //     className="flex flex-col h-full bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
+    //     data-testid="product-card"
+    //   >
+    //     {/* Image Container - Fixed aspect ratio */}
+    //     <div className="relative overflow-hidden bg-ui-bg-subtle aspect-square">
+    //       {imageUrl ? (
+    //         <Image
+    //           src={imageUrl}
+    //           alt={product.title || "Product image"}
+    //           className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
+    //           fill
+    //           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
+    //         />
+    //       ) : (
+    //         <div className="w-full h-full flex items-center justify-center">
+    //           <PlaceholderImage size={24} />
+    //         </div>
+    //       )}
+    //     </div>
+
+    //     {/* Product Info */}
+    //     <div className="flex flex-col p-3 flex-1">
+    //       <Text
+    //         className="text-xs md:text-sm font-normal text-ui-fg-base line-clamp-2 mb-2 min-h-[2.5rem]"
+    //         data-testid="product-title"
+    //       >
+    //         {product.title}
+    //       </Text>
+
+    //       <div className="mt-auto">
+    //         {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </LocalizedClientLink>
+
+
+    // Flipping cards
+
+    <LocalizedClientLink
+      href={`/products/${product.handle}`}
+      className="group block"
     >
-      <div 
-        className="flex flex-col h-full bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100"
-        data-testid="product-card"
-      >
-        {/* Image Container - Fixed aspect ratio */}
-        <div className="relative overflow-hidden bg-ui-bg-subtle aspect-square">
-          {imageUrl ? (
-            <Image
-              src={imageUrl} 
-              alt={product.title || "Product image"}
-              className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <PlaceholderImage size={24} />
+      {/* Perspective wrapper with fixed aspect ratio */}
+      <div className="[perspective:1000px] w-full aspect-[3/4]">
+        {/* Flip container */}
+        <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+          {/* FRONT SIDE */}
+          <div className="absolute inset-0 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 [backface-visibility:hidden] flex flex-col">
+            {/* Image */}
+            <div className="relative overflow-hidden bg-ui-bg-subtle w-full aspect-square">
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={product.title || "Product image"}
+                  className="object-cover w-full h-full"
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <PlaceholderImage size={24} />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        
-        {/* Product Info */}
-        <div className="flex flex-col p-3 flex-1">
-          <Text 
-            className="text-xs md:text-sm font-normal text-ui-fg-base line-clamp-2 mb-2 min-h-[2.5rem]" 
-            data-testid="product-title"
-          >
-            {product.title}
-          </Text>
-          
-          <div className="mt-auto">
-            {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
+
+            {/* Info */}
+            <div className="flex flex-col p-3 flex-1">
+              <Text className="text-xs md:text-sm text-ui-fg-base line-clamp-2">
+                {product.title}
+              </Text>
+            </div>
+          </div>
+
+          {/* BACK SIDE */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-md border border-gray-200 p-4 flex flex-col justify-center items-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+            <Text className="text-sm font-semibold mb-3 line-clamp-2">
+              {product.title}
+            </Text>
+
+            {cheapestPrice && (
+              <div className="mb-4">
+                <PreviewPrice price={cheapestPrice} />
+              </div>
+            )}
+
+            <span className="text-xs text-gray-600 font-medium">
+              View Details →
+            </span>
           </div>
         </div>
       </div>
