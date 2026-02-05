@@ -61,7 +61,6 @@ export default async function ProductCard({
     //   </div>
     // </LocalizedClientLink>
 
-
     // Flipping cards
 
     <LocalizedClientLink
@@ -100,20 +99,43 @@ export default async function ProductCard({
           </div>
 
           {/* BACK SIDE */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white rounded-lg shadow-md border border-gray-200 p-4 flex flex-col justify-center items-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
-            <Text className="text-sm font-semibold mb-3 line-clamp-2">
-              {product.title}
-            </Text>
+          <div className="absolute inset-0 rounded-lg shadow-lg border border-gray-200 overflow-hidden [transform:rotateY(180deg)] [backface-visibility:hidden]">
+            {/* Background Image with Overlay */}
+            <div className="absolute inset-0">
+              {imageUrl ? (
+                <Image
+                  src={imageUrl}
+                  alt={product.title || "Product image"}
+                  className="object-cover w-full h-full"
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-100" />
+              )}
+              {/* Dark overlay for text readability */}
+              <div className="absolute inset-0 bg-black/40" />
+            </div>
 
-            {cheapestPrice && (
-              <div className="mb-4">
-                <PreviewPrice price={cheapestPrice} />
+            {/* Content positioned lower */}
+            <div className="relative h-full flex flex-col justify-end p-5 pb-6 text-white">
+              <Text className="text-base font-bold mb-3 line-clamp-2 drop-shadow-lg">
+                {product.title}
+              </Text>
+
+              {cheapestPrice && (
+                <div className="mb-4 transform scale-105 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg inline-block">
+                  <PreviewPrice price={cheapestPrice} />
+                </div>
+              )}
+
+              <div className="flex items-center justify-center gap-2 text-sm font-semibold drop-shadow-md">
+                <span>View Details</span>
+                <span className="transform group-hover:translate-x-1 transition-transform duration-300">
+                  →
+                </span>
               </div>
-            )}
-
-            <span className="text-xs text-gray-600 font-medium">
-              View Details →
-            </span>
+            </div>
           </div>
         </div>
       </div>
