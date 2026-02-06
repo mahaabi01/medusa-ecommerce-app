@@ -124,7 +124,7 @@ export default async function ProductCard({
               </Text>
 
               {cheapestPrice && (
-                <div className="mb-4 transform scale-105 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg inline-block">
+                <div className="mb-4 transform scale-105 bg-lime-300 bg-opacity-100 text-white px-4 py-2 rounded-lg shadow-lg inline-block">
                   <PreviewPrice price={cheapestPrice} />
                 </div>
               )}

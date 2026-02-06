@@ -11,21 +11,40 @@ function PreviewPriceClient({ price }: { price: VariantPrice }) {
     return null
   }
 
+//   return (
+//     <div className="flex items-center gap-1.5 flex-wrap">
+//       {price.price_type === "sale" && (
+//         <Text
+//           className="line-through text-xs text-ui-fg-muted"
+//           data-testid="original-price"
+//         >
+//           {price.original_price}
+//         </Text>
+//       )}
+//       <Text
+//         className={clx("font-semibold text-sm md:text-xl", {
+//           "text-green-700": price.price_type === "sale",
+//           "text-ui-fg-base": price.price_type !== "sale",
+//         })}
+//         data-testid="price"
+//       >
+//         {price.calculated_price}
+//       </Text>
+//     </div>
+//   )
+// }
   return (
     <div className="flex items-center gap-1.5 flex-wrap">
       {price.price_type === "sale" && (
         <Text
-          className="line-through text-xs text-ui-fg-muted"
+          className="line-through text-xs text-green-700"
           data-testid="original-price"
         >
           {price.original_price}
         </Text>
       )}
       <Text
-        className={clx("font-semibold text-sm md:text-base", {
-          "text-green-700": price.price_type === "sale",
-          "text-ui-fg-base": price.price_type !== "sale",
-        })}
+        className="font-semibold text-sm md:text-xl text-green-700"
         data-testid="price"
       >
         {price.calculated_price}
