@@ -1,6 +1,7 @@
 import { Text } from "@medusajs/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { siteConfig } from "../../../../../config/siteConfig"
+import Image from "next/image"
 
 export default function Footer() {
   const footer = siteConfig?.footer
@@ -16,9 +17,17 @@ export default function Footer() {
           <div>
             <LocalizedClientLink
               href="/"
-              className="text-xl font-semibold uppercase text-white hover:text-blue-400"
+              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              data-testid="nav-store-link"
+              // className="text-xl font-semibold uppercase text-white hover:text-blue-400"
             >
-              {footer?.company?.name || siteConfig.companyName}
+              <Image
+              src={siteConfig.logoFooter.src}
+              alt={siteConfig.logoFooter.alt}
+              width={120}
+              height={36}
+              />
+              {/* {footer?.company?.name || siteConfig.companyName} */}
             </LocalizedClientLink>
 
             {footer?.company?.description && (

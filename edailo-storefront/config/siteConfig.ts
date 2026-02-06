@@ -12,6 +12,10 @@ export const siteConfig = {
     src: "/logo.png",
     alt: "Edailo Store",
   },
+  logoFooter: {
+    src: "/logo-footer.png",
+    alt: "EDAILO MARKET"
+  },
   navLinks: {
     account: { label: "Account", href: "/account" },
     cart: { label: "Cart", href: "/cart" },
@@ -20,7 +24,7 @@ export const siteConfig = {
     deals: { label: "Deals", href: "/deals" },
     latest: { label: "Latest", href: "/latest" },
     customerService: { label: "Customer Service", href: "/customer-service" },
-    sellOnEdailo: { label: "Sell on eDAILO", href: "/sells-on-edailo" },
+    sellOnEdailo: { label: "Edailo - Sell on eDAILO", href: "/sells-on-edailo" },
   },
 
   sideMenuItems: {
@@ -105,7 +109,7 @@ export const siteConfig = {
     },
   },
   customer: {
-    service: "Customer Service",
+    service: "Edailo - Customer Service",
     help: "You can find frequently asked questions and answers on our customer service page.",
   },
   product: {
